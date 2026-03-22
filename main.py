@@ -787,11 +787,243 @@ def update_reminder(rid):
     conn.close()
     return jsonify({"success": True})
 
+# ════════════════════════════════════════════════════════════════════════════
+# ANALYTICS ROUTES
+# ════════════════════════════════════════════════════════════════════════════
+
+@app.get("/student/analytics")
+def student_analytics():
+    err = require_auth("student")
+    if err: return err
+    user = current_user()
+    conn = get_db()
+
+    # Grades data for bar chart
+    grades = conn.execute(
+        "SELECT subject, marks_obtained, total_marks FROM grades WHERE student_id=?",
+        (user["id"],)
+    ).fetchall()
+
+    grades_data = [{
+        "subject": g["subject"][:10],  # truncate for chart
+        "marks": g["marks_obtained"],
+        "total": g["total_marks"],
+        "percentage": round((g["marks_obtained"] / g["total_marks"]) * 100, 1)
+    } for g in grades]
+
+    # Class average per subject
+    class_avg = []
+    for g in grades:
+        avg = conn.execute(
+            "SELECT AVG(marks_obtained) as avg FROM grades WHERE subject=?",
+            (g["subject"],)
+        ).fetchone()["avg"]
+        class_avg.append({
+            "subject": g["subject"][:10],
+            "your_marks": g["marks_obtained"],
+            "class_avg": round(avg, 1)
+        })
+
+    # Attendance by month
+    attendance_records = conn.execute(
+        "SELECT date, status FROM attendance WHERE roll_number=? ORDER BY date",
+        (user["roll_number"],)
+    ).fetchall()
+
+    # Group by month
+    monthly = {}
+    for r in attendance_records:
+        month = r["date"][:7]  # YYYY-MM
+        if month not in monthly:
+            monthly[month] = {"present": 0, "absent": 0}
+        if r["status"] == "present":
+            monthly[month]["present"] += 1
+        else:
+            monthly[month]["absent"] += 1
+
+    monthly_data = [{"month": k, "present": v["present"], "absent": v["absent"]} for k, v in sorted(monthly.items())]
+
+    conn.close()
+    return jsonify({
+        "grades_data": grades_data,
+        "class_comparison": class_avg,
+        "monthly_attendance": monthly_data
+    })
+
+
 
 # ════════════════════════════════════════════════════════════════════════════
 # CHATBOT
 # ════════════════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════════════
+# ANALYTICS ROUTES
+# ════════════════════════════════════════════════════════════════════════════
 
+
+
+@app.get("/faculty/analytics")
+def faculty_analytics():
+    err = require_auth("faculty")
+    if err: return err
+
+    conn = get_db()
+
+    # All students with attendance percentage
+    students = conn.execute(
+        "SELECT id, name, roll_number FROM users WHERE role='student'"
+    ).fetchall()
+
+    total_days = conn.execute("SELECT COUNT(DISTINCT date) as t FROM attendance").fetchone()["t"] or 1
+
+    student_data = []
+    for s in students:
+        present = conn.execute(
+            "SELECT COUNT(*) as cnt FROM attendance WHERE roll_number=? AND status='present'",
+            (s["roll_number"],)
+        ).fetchone()["cnt"]
+        pct = round((present / total_days) * 100, 1)
+        student_data.append({
+            "name": s["name"].split()[0],  # first name only for chart
+            "attendance": pct,
+            "status": "safe" if pct >= 75 else "warning" if pct >= 60 else "danger"
+        })
+
+    # Subject wise class average
+    subjects = conn.execute("SELECT DISTINCT subject FROM grades").fetchall()
+    subject_avg = []
+    for subj in subjects:
+        avg = conn.execute(
+            "SELECT AVG(marks_obtained) as avg, COUNT(*) as cnt FROM grades WHERE subject=?",
+            (subj["subject"],)
+        ).fetchone()
+        subject_avg.append({
+            "subject": subj["subject"][:12],
+            "average": round(avg["avg"], 1),
+            "students": avg["cnt"]
+        })
+
+    # Attendance distribution
+    safe = sum(1 for s in student_data if s["status"] == "safe")
+    warning = sum(1 for s in student_data if s["status"] == "warning")
+    danger = sum(1 for s in student_data if s["status"] == "danger")
+
+    conn.close()
+    return jsonify({
+        "student_attendance": student_data,
+        "subject_averages": subject_avg,
+        "attendance_distribution": [
+            {"name": "Safe (75%+)", "value": safe, "color": "#10b981"},
+            {"name": "Warning (60-75%)", "value": warning, "color": "#f59e0b"},
+            {"name": "Danger (<60%)", "value": danger, "color": "#ef4444"},
+        ]
+    })
+@app.get("/student/marks-calculator")
+def marks_calculator():
+    err = require_auth("student")
+    if err: return err
+    user = current_user()
+    conn = get_db()
+    grades = conn.execute(
+        "SELECT subject, marks_obtained, total_marks FROM grades WHERE student_id=?",
+        (user["id"],)
+    ).fetchall()
+    conn.close()
+
+    results = []
+    for g in grades:
+        obtained = g["marks_obtained"]
+        total = g["total_marks"]
+        passing_marks = total * 0.40  # 40% to pass
+        internal_weightage = obtained * 0.40  # 40% weightage for internal
+        external_needed = (passing_marks - internal_weightage) / 0.60
+        external_needed = max(0, round(external_needed, 1))
+        percentage = round((obtained / total) * 100, 1)
+        status = "safe" if percentage >= 75 else "warning" if percentage >= 50 else "danger"
+        results.append({
+            "subject": g["subject"],
+            "internal_marks": obtained,
+            "total_marks": total,
+            "percentage": percentage,
+            "external_needed": external_needed,
+            "max_external": 60,
+            "status": status,
+            "can_pass": external_needed <= 60
+        })
+
+    return jsonify({"results": results})
+@app.get("/student/attendance-predictor")
+def attendance_predictor():
+    err = require_auth("student")
+    if err: return err
+    user = current_user()
+    conn = get_db()
+
+    # Get total classes per subject
+    subjects = conn.execute(
+        "SELECT subject, COUNT(*) as total, SUM(CASE WHEN status='present' THEN 1 ELSE 0 END) as present FROM attendance WHERE roll_number=? GROUP BY subject",
+        (user["roll_number"],)
+    ).fetchall()
+
+    results = []
+    for s in subjects:
+        total = s["total"]
+        present = s["present"]
+        percentage = round((present / total) * 100, 1) if total > 0 else 0
+
+        # Classes needed to reach 75%
+        if percentage >= 75:
+            # How many can skip
+            can_skip = 0
+            t = total
+            while True:
+                if ((present) / (t + 1)) * 100 < 75:
+                    break
+                t += 1
+                can_skip += 1
+            status = "safe"
+            message = f"✅ You can skip {can_skip} more classes"
+        else:
+            # Classes needed to reach 75%
+            needed = 0
+            t = total
+            p = present
+            while (p / t) * 100 < 75:
+                t += 1
+                p += 1
+                needed += 1
+            status = "warning" if percentage >= 60 else "danger"
+            message = f"⚠️ Attend {needed} more classes to reach 75%"
+
+        results.append({
+            "subject": s["subject"],
+            "present": present,
+            "total": total,
+            "percentage": percentage,
+            "status": status,
+            "message": message
+        })
+
+    # Overall attendance
+    total_all = conn.execute(
+        "SELECT COUNT(*) as t FROM attendance WHERE roll_number=?",
+        (user["roll_number"],)
+    ).fetchone()["t"]
+    present_all = conn.execute(
+        "SELECT COUNT(*) as p FROM attendance WHERE roll_number=? AND status='present'",
+        (user["roll_number"],)
+    ).fetchone()["p"]
+    overall_pct = round((present_all / total_all) * 100, 1) if total_all > 0 else 0
+
+    conn.close()
+    return jsonify({
+        "results": results,
+        "overall": {
+            "present": present_all,
+            "total": total_all,
+            "percentage": overall_pct,
+            "eligible": overall_pct >= 75
+        }
+    })
 @app.post("/chat")
 def chat():
     data = request.get_json(silent=True) or {}
@@ -820,5 +1052,7 @@ if __name__ == "__main__":
     print("   Faculty  — Roll: FAC001  Password: faculty123")
     print("   Student  — Roll: STU001  Password: student123")
     print("   Student  — Roll: STU002  Password: student123\n")
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    import os
+port = int(os.environ.get("PORT", 5000))
+app.run(host="0.0.0.0", port=port, debug=False)
 

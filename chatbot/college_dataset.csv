@@ -1,111 +1,898 @@
 text,intent
-Admission,
-What is the eligibility criteria for the BCA program?,admission
-Is there an age limit for taking admission?,admission
-Admission ke liye kaunse documents scan karne hai?,admission
-Can I change my branch after taking admission?,admission
-"I want to withdraw my admission, what is the refund policy?",admission
-Entrance exam result kab aayega for admission?,admission
-How many seats are available for CSE?,admission
-Is there a lateral entry option for diploma students?,admission
-College campus visit timing for admission query?,admission
-Can I apply for two courses at once?,admission
-Fees,
-What is the total cost of the 4-year BTech course?,fees
-Exam fees separately bharni padti hai kya?,fees
-Is the mess fee included in the hostel fee?,fees
-I paid the fee but haven't received the receipt.,fees
-Are there any extra charges for lab or sports?,fees
-Fee refund process after cancellation kya hai?,fees
-Can I get a fee waiver for being a topper?,fees
-"Online payment fail ho gaya, money deducted but status pending.",fees
-Does the college accept Demand Draft (DD) for fees?,fees
-Semester fees payment link provide kardo.,fees
-Exams,
-What happens if I fail in one subject?,exams
-Re-exam (supplementary) kab hote hai?,exams
-Can I see my checked answer sheet?,exams
-Syllabus for mid-term exams kaha milega?,exams
-Is there a negative marking in the entrance exam?,exams
-Hall ticket print nahi ho raha hai.,exams
-What is the duration of the end-sem exam?,exams
-Emergency leave during exams possible hai?,exams
-How to apply for a duplicate marksheet?,exams
-Practical marks internal hote hai ya external?,exams
-Attendance,
-How much attendance is needed for lab sessions?,attendance
-Attendance kam hone par admit card milega?,attendance
-"I was sick, how to submit a medical for attendance?",attendance
-"Teacher ne attendance mark nahi ki, kya karu?",attendance
-Is attendance compulsory for final year students?,attendance
-Attendance report weekly milti hai kya?,attendance
-My attendance is showing zero on the portal.,attendance
-Extra-curricular activities ke liye attendance milti hai?,attendance
-Total lectures held till now kaise pata kare?,attendance
-Detention list kab release hogi?,attendance
-Timetable,
-What are the college opening and closing hours?,timetable
-Aaj koi extra class hai kya?,timetable
-When is the lunch break in the timetable?,timetable
+What is the eligibility for BTech?,admission
+Admission ke liye kya chahiye?,admission
+How can I apply for undergraduate courses?,admission
+Application form kab aayega?,admission
+Direct admission ka kya process hai?,admission
+Entrance exam is mandatory for admission?,admission
+Admission portal link share kardo?,admission
+What are the documents required for admission?,admission
+Is there any management quota available?,admission
+Lateral entry admission kaise hota hai?,admission
+When is the last date to apply?,admission
+Admission office kahan par hai?,admission
+Online application fees kitni hai?,admission
+Can I change my branch after admission?,admission
+First year admission criteria kya hai?,admission
+Cutoff list kab release hogi?,admission
+Admission process step by step batao?,admission
+Verification ke liye kab aana hai?,admission
+I want to take admission in MBA?,admission
+Foreign students ke liye admission rules?,admission
+Provisional admission ka kya matlab hai?,admission
+Diploma ke baad degree mein admission?,admission
+Reporting time for new students?,admission
+Admission cancel karne par refund milega?,admission
+Waitlist candidates ka kya hoga?,admission
+Is there an entrance test for BBA?,admission
+Registration form kaise bhare?,admission
+Required marks for admission in CSE?,admission
+Gap year students admission le sakte hain?,admission
+MTech admission eligibility criteria?,admission
+Admission letter kab download hoga?,admission
+Counseling schedule kya hai?,admission
+Admission ke time original documents chahiye?,admission
+Is there any age limit for admission?,admission
+Distance learning admission available hai?,admission
+PhD admission notification kab aayega?,admission
+Selection list kahan check kare?,admission
+Part time courses mein admission kaise le?,admission
+NRI quota admission details please?,admission
+Admission helpline number kya hai?,admission
+Entrance score card upload karna hai?,admission
+Transfer certificate mandatory hai admission ke liye?,admission
+Medical certificate format for admission?,admission
+Admission confirmation mail nahi aaya?,admission
+Second round counseling kab shuru hogi?,admission
+Document verification offline hoga ya online?,admission
+Admission cell contact person name?,admission
+Minimum percentage for general category?,admission
+Seat allotment kab tak hogi?,admission
+Can I apply for two courses together?,admission
+UG courses registration process?,admission
+BCA admission ke liye maths zaruri hai?,admission
+Is there any interview for admission?,admission
+How to check my application status?,admission
+Admission process for sports quota?,admission
+Defence quota seat available hai?,admission
+Hostel admission process after college admission?,admission
+What are the stream choices available?,admission
+Can I edit my admission form after submission?,admission
+Registration portal password bhul gaya?,admission
+Admission test syllabus download link?,admission
+Required 12th percentage for admission?,admission
+Is there an orientation for new students?,admission
+College visit for admission enquiry?,admission
+Admission brochures available hain?,admission
+MSc biotechnology admission details?,admission
+How to apply for law courses?,admission
+Is migration certificate mandatory for admission?,admission
+Can I get admission based on JEE scores?,admission
+CUET score accepted hai yahan?,admission
+Admission form price kitna hai?,admission
+Last date for lateral entry?,admission
+Admission ke liye online payment issue?,admission
+When will the physical reporting start?,admission
+Is there an evening shift for classes?,admission
+Vocational courses admission info?,admission
+What is the duration of the admission process?,admission
+Documents needed for masters admission?,admission
+Can I apply without my final results?,admission
+Admission window kab band hogi?,admission
+Spot round admission kya hota hai?,admission
+Are there any reserved seats for local students?,admission
+Admission list mein naam kaise check kare?,admission
+Registration fees non-refundable hai?,admission
+Hostel admission and college admission separate hain?,admission
+Which entrance exams are accepted?,admission
+BPharm admission eligibility?,admission
+Is there any age relaxation for SC/ST?,admission
+How to apply for PhD entrance?,admission
+What is the college code for admission?,admission
+Admission portal mobile pe chalega?,admission
+Can I submit documents via email?,admission
+Online counseling process kya hai?,admission
+When do classes start after admission?,admission
+Admission confirmation status check?,admission
+Do you have a waiting list for CSE?,admission
+Is lateral entry available for Mechanical?,admission
+Admission office extension number?,admission
+Process for cancelling admission?,admission
+What is the total fee for BTech?,fees
+Fees kitni hai saal ki?,fees
+How to pay fees online?,fees
+Semester fees ki last date kya hai?,fees
+Late fee fine kitna lagega?,fees
+Can I pay my fees in installments?,fees
+Installment facility available hai kya?,fees
+Fees receipt kahan se download kare?,fees
+Is there any hike in fees this year?,fees
+Exam fees kab bharni hai?,fees
+Exam fees portal link please?,fees
+Hostel fees include hai kya total fees mein?,fees
+Mess fees alag se deni hogi?,fees
+What is the bus fee for the whole year?,fees
+Refund policy for fees?,fees
+Security deposit kab wapas milega?,fees
+Admission cancel kiya toh fees refund hogi?,fees
+Tuition fee waiver kaise milta hai?,fees
+Scholarship ke baad kitni fees bachegi?,fees
+Fine lagne par fees kahan bhare?,fees
+Online payment options kya kya hain?,fees
+Can I pay by demand draft?,fees
+Cash payment allowed hai accounts office mein?,fees
+Bank account details for fee transfer?,fees
+Transaction failure ho gaya fees bharte waqt?,fees
+Double payment ho gayi hai fees ki?,fees
+Fee structure for MBA students?,fees
+PhD ki research fee kitni hai?,fees
+Library fine kaise check kare?,fees
+Back paper ki fees kitni hai?,fees
+Revaluation form ki fees?,fees
+Is there any concession for siblings?,fees
+Fees badhne wali hai kya agle saal?,fees
+Management quota ki fees kitni hai?,fees
+Miscellaneous charges kya kya hain?,fees
+Activity fees ka breakdown chahiye?,fees
+Identity card ki fees kitni hai?,fees
+Documents courier karne ki fees?,fees
+Provisional certificate ki fees?,fees
+Convocation fees kitni deni hai?,fees
+Duplicate ID card ki fees?,fees
+Fee structure for lateral entry?,fees
+Uniform ke liye kitne paise dene hain?,fees
+Industrial visit ki extra fees hai?,fees
+Late registration charges kitne hain?,fees
+Check my fee dues for this sem?,fees
+Is the fee same for NRI students?,fees
+Sports quota students ko fee discount hai?,fees
+Account office ki timings kya hai?,fees
+Can I pay fees via UPI?,fees
+Full course fee structure PDF?,fees
+Bus fee refund process?,fees
+Semester wise fee breakdown?,fees
+What happens if I miss the fee deadline?,fees
+Account department contact info?,fees
+Hostel security deposit amount?,fees
+Exam form late fee?,fees
+Is there an extra fee for laboratories?,fees
+Training and placement fee kitni hai?,fees
+Caution money kab return hoti hai?,fees
+Is GST included in college fees?,fees
+How to apply for fee concession?,fees
+Fees for official transcripts?,fees
+Duplicate marksheet application fee?,fees
+Alumni association registration fee?,fees
+Re-admission fee kitni lagega?,fees
+Can I pay fees through Credit Card?,fees
+Net banking support for fee portal?,fees
+Is the mess fee monthly or yearly?,fees
+Any discount for full one-time payment?,fees
+Fees for semester abroad program?,fees
+Project submission fee hai kya?,fees
+Waitlisted candidates fee payment?,fees
+Can parents pay fees from their portal?,fees
+Online fee transaction limit?,fees
+Is there any hidden cost in fees?,fees
+Fees for sports and gym facilities?,fees
+Cultural fest registration fee?,fees
+Extra-curricular activity charges?,fees
+Course material fees include hai?,fees
+Workshop registration charges?,fees
+Parking fee for students?,fees
+Insurance fee for students?,fees
+Medical facility fees details?,fees
+Duplicate degree certificate fee?,fees
+Fine for late library book return?,fees
+Internet and WiFi charges per sem?,fees
+Is there any fee for WiFi?,fees
+Degree certificate delivery charges?,fees
+Verification fee for documents?,fees
+Transcript charges per copy?,fees
+When will the semester exams start?,exams
+Exams kab se shuru ho rahe hain?,exams
+Date sheet kab aayegi?,exams
+Timetable for internal exams?,exams
+Sessional exams ka schedule kya hai?,exams
+Where can I check my results?,exams
+Result kab tak announce hoga?,exams
+Back paper exams kab honge?,exams
+How to apply for revaluation?,exams
+Rechecking ka kya process hai?,exams
+Admit card kahan se download kare?,exams
+Hall ticket kab milega?,exams
+Exam center kahan hoga hamara?,exams
+Pass hone ke liye kitne marks chahiye?,exams
+What is the passing criteria for theory?,exams
+Internal marks portal pe kab update honge?,exams
+Absent lag gayi hai exam mein kya karun?,exams
+Practical exams ka schedule chahiye?,exams
+Lab exams kab conduct honge?,exams
+Viva voce kab hoga sessional ka?,exams
+Result portal login nahi ho raha?,exams
+Marksheet kab milegi college se?,exams
+Online exam hoga ya offline?,exams
+Syllabus for end semester exams?,exams
+Important questions for computer science exam?,exams
+Carry over paper ka kya rule hai?,exams
+Supplementary exams kab hote hain?,exams
+Grace marks milte hain kya?,exams
+CGPA kaise calculate hota hai?,exams
+SGPA to percentage conversion formula?,exams
+Improvement exam de sakte hain?,exams
+Exam form kaise bhare online?,exams
+Last date for exam form submission?,exams
+Penalty for missing mid-sem exams?,exams
+Unfair means case ka kya rule hai?,exams
+Exam ke time ID card lana compulsory hai?,exams
+Blue pen ya black pen allowed hai?,exams
+Calculator allowed hai maths exam mein?,exams
+Previous year question papers kahan milenge?,exams
+Mock test link share kardo?,exams
+External examiner kab aayenge practical ke liye?,exams
+Re-exam ki date change ho sakti hai?,exams
+Medical leave par exam miss ho gaya?,exams
+End sem results portal pe kab aayenge?,exams
+What if I fail in one subject?,exams
+How many back papers are allowed?,exams
+Consolidated marksheet kab milti hai?,exams
+Degree completion ke liye kitne credits chahiye?,exams
+Is there any weightage for internals?,exams
+Exam pattern kya hoga is baar?,exams
+When is the final viva?,exams
+Check my result status?,exams
+Internal assessment weightage?,exams
+Open book exam rules?,exams
+When will marksheet be sent to home?,exams
+Exam timing for morning shift?,exams
+Is there a gap between exams?,exams
+How to apply for carryover?,exams
+Exam center change request?,exams
+Duplicate admit card process?,exams
+Rules for objective type exams?,exams
+Final year project exam date?,exams
+Thesis submission deadline?,exams
+Paper pattern for sessional 1?,exams
+Is there negative marking in internals?,exams
+Result correction procedure?,exams
+What is a passing grade?,exams
+Degree certificate delivery date?,exams
+External viva components?,exams
+Practical file submission last date?,exams
+How to check CGPA online?,exams
+Official result notification link?,exams
+Semester result PDF download?,exams
+Can I see my answer sheet?,exams
+Photocopy of answer book request?,exams
+Total marks in theory exam?,exams
+Min marks to avoid back paper?,exams
+Exam controller office location?,exams
+Helpline for exam portal issues?,exams
+Can I use a scientific calculator?,exams
+Formula sheet allowed in exam?,exams
+Dress code for exams?,exams
+Reporting time at exam center?,exams
+When is the re-exam for final year?,exams
+Summer exam schedule?,exams
+Winter sem exam dates?,exams
+Is result out for BTech 3rd sem?,exams
+How to calculate SGPA?,exams
+What is the minimum attendance required?,attendance
+Attendance kitni honi chahiye exams ke liye?,attendance
+Is 75 percent attendance mandatory?,attendance
+Attendance shortage hone par kya hoga?,attendance
+How can I check my daily attendance?,attendance
+Portal pe attendance show nahi ho rahi?,attendance
+Attendance update kab hogi?,attendance
+Can I get attendance for medical leave?,attendance
+Medical certificate dene par attendance milegi?,attendance
+Sports tournament ke liye attendance relax milegi?,attendance
+Attendance kam hai toh admit card milega?,attendance
+Teacher ne galat absent laga di hai?,attendance
+Proxy attendance lagayi toh kya action hoga?,attendance
+Subject wise attendance kahan dekhe?,attendance
+Monthly attendance report kab aayegi?,attendance
+What is the criteria for attendance award?,attendance
+Lab mein attendance alag se count hoti hai?,attendance
+Seminar attend karne par attendance milegi?,attendance
+Industrial visit ki attendance count hogi?,attendance
+Last month ki attendance missing hai?,attendance
+HOD se attendance ki baat kaise kare?,attendance
+Placement drive ke liye attendance milegi?,attendance
+Late aane par attendance milti hai?,attendance
+Total working days kitne hain sem mein?,attendance
+Condonation form kab bharna hai?,attendance
+Attendance calculation formula kya hai?,attendance
+What if I have 74 percent attendance?,attendance
+Attendance list notice board pe kab lagegi?,attendance
+Parents ko attendance report bhejte hain?,attendance
+Attendance portal password reset kaise kare?,attendance
+Extra classes ki attendance count hogi?,attendance
+NSS camp ki attendance ka kya process hai?,attendance
+Can I see attendance of my friends?,attendance
+How to maintain attendance above 80?,attendance
+Teacher se attendance request kaise kare?,attendance
+Attendance portal link not working?,attendance
+Dean permission for attendance shortage?,attendance
+Is attendance mandatory for final year?,attendance
+Attendance criteria for scholarship?,attendance
+Can I get attendance for internship?,attendance
+Holiday ke din attendance lagti hai?,attendance
+First period ki attendance miss ho gayi?,attendance
+Lecture wise attendance tracking?,attendance
+Automatic attendance system hai kya?,attendance
+Bio-metric attendance machine not working?,attendance
+Attendance register check karna hai?,attendance
+Final attendance tally kab hogi?,attendance
+Attendance warning letter kab aate hain?,attendance
+Short attendance list download link?,attendance
+Is attendance counted during fest?,attendance
+Can I get attendance for college event?,attendance
+Will my attendance increase if I attend workshop?,attendance
+How to apply for duty leave?,attendance
+Duty leave form kahan milega?,attendance
+Can I check attendance of previous sem?,attendance
+How many holidays are allowed?,attendance
+Max leaves in a month?,attendance
+What is the minimum attendance for practicals?,attendance
+If I am sick, do I get attendance?,attendance
+Hospital admission attendance benefit?,attendance
+Medical board attendance review?,attendance
+Will missing one class affect 75%?,attendance
+Online class attendance record?,attendance
+Webinar attendance count hogi?,attendance
+Who updates attendance on portal?,attendance
+How to rectify attendance error?,attendance
+Attendance criteria for placement?,attendance
+Is 100% attendance possible?,attendance
+Attendance login credentials?,attendance
+Mobile app for checking attendance?,attendance
+SMS notification for low attendance?,attendance
+Can I see my attendance percentage?,attendance
+Total lectures conducted till now?,attendance
+Missing attendance for elective subject?,attendance
+Attendance for bridge courses?,attendance
+Is attendance required for project work?,attendance
+Final year attendance relaxation?,attendance
+HOD approval for attendance correction?,attendance
+Attendance system maintenance time?,attendance
+Can I check attendance from home?,attendance
+Faculty not marking attendance properly?,attendance
+Daily attendance summary report?,attendance
+Attendance required for hostel?,attendance
+What is the class schedule for CSE?,timetable
+Timetable kab change hoga?,timetable
+Where can I find my section timetable?,timetable
+Is today a holiday?,timetable
+Kal college ki chutti hai kya?,timetable
+When is the summer vacation starting?,timetable
+Winter break kab se hai?,timetable
+Holi ki kitni chuttiyan hain?,timetable
+Diwali vacation dates please?,timetable
+Is Saturday a working day?,timetable
+Classes ki timings kya hain?,timetable
+Lunch break kitne baje hota hai?,timetable
+When is the first lecture scheduled?,timetable
+Lab timings for mechanical branch?,timetable
+Timetable mein koi change hai kya aaj?,timetable
+Academic calendar download kahan se kare?,timetable
+Semester kab khatam hoga?,timetable
+Next sem kab se shuru ho raha hai?,timetable
+Are there any extra classes on Sunday?,timetable
+Cultural fest ki dates kya hain?,timetable
+Sports meet kab conduct hoga?,timetable
+Sports day par classes hongi?,timetable
+Public holidays list for this year?,timetable
+Is there a half day tomorrow?,timetable
 Timetable for elective subjects?,timetable
-Where can I see the faculty-wise timetable?,timetable
-Is there a holiday tomorrow?,timetable
-Monday ka schedule change hua hai kya?,timetable
-Practical batches ka timing kya hai?,timetable
-When will the remedial class be held?,timetable
-Seminar hall ka schedule kaha check kare?,timetable
-Placements,
-Does the college have a placement cell?,placements
-Criteria for sitting in Google placement drive?,placements
-Soft skills training milti hai placement ke liye?,placements
-What is the placement percentage for Mechanical?,placements
-Can alumni apply for current placement drives?,placements
-Placement ke liye minimum CGPA kitna chahiye?,placements
-Startup companies aati hai kya placement ke liye?,placements
-TPO (Training & Placement Officer) ka office kaha hai?,placements
-Mock interviews kab conduct honge?,placements
-Internship certificate mandatory hai placement ke liye?,placements
-Hostel,
-Is laundry service available in the hostel?,hostel
-Hostel room mein heater allowed hai?,hostel
-Room allotment preference basis pe hota hai?,hostel
-Outside food allowed hai kya hostel mein?,hostel
-What is the distance between hostel and college?,hostel
-Hostel change karne ka procedure kya hai?,hostel
-Is there a gym facility in the hostel?,hostel
-Parents can stay in the hostel for one day?,hostel
-Hostel mein water cooler and geyser hai?,hostel
-Night out permission process for hostellers.,hostel
-Library,
-Can I donate books to the library?,library
-Digital library ka login ID pass kaise milega?,library
-Quiet study zones library mein kaha hai?,library
-How to check if a book is available in the library?,library
-Library fine per day kitna charge hota hai?,library
-Reference books ghar le ja sakte hai?,library
-Newspaper and magazines section kaha hai?,library
-Library card renew kaise karwaye?,library
-Is there a photocopier (Xerox) inside the library?,library
-Can I use my laptop inside the reading hall?,library
-Scholarships,
-Can international students apply for scholarships?,scholarships
-Caste certificate required hai scholarship ke liye?,scholarships
-EWS scholarship eligibility kya hai?,scholarships
-"My scholarship application was rejected, why?",scholarships
-Sports quota scholarship kaise milti hai?,scholarships
-Bank account link kaise kare scholarship portal se?,scholarships
-Is there a scholarship for single girl child?,scholarships
-Scholarship form verify hone mein kitna time lagta hai?,scholarships
-Previous year marksheet chahiye scholarship ke liye?,scholarships
-Can I get a full tuition fee waiver?,scholarships
-Certificates,
-How to apply for a gap certificate?,certificates
-Passing certificate and Degree mein kya difference hai?,certificates
-Urgent basis pe bonafide mil sakta hai?,certificates
-Degree certificate convocation ke baad kab milega?,certificates
-Character certificate kitne din valid rehta hai?,certificates
-Online portal for certificate application link?,certificates
-How to get an English translation of my degree?,certificates
-What to do if there is a spelling mistake in my marksheet?,certificates
-Caste validity certificate ka process kya hai?,certificates
-College leaving certificate (LC) apply kaise kare?,certificates
+Workshop schedule kya hai?,timetable
+Project review ki date kya hai?,timetable
+Submission ki last date kab hai?,timetable
+Guest lecture ka timing batao?,timetable
+Is college open on Ambedkar Jayanti?,timetable
+When will the remedial classes start?,timetable
+Timetable display board kahan hai?,timetable
+Section B ki timing kya hai?,timetable
+Slot wise timetable explanation?,timetable
+Free periods kab hain hamare?,timetable
+Library timings on Sunday?,timetable
+Computer lab access timings?,timetable
+When is the college foundation day?,timetable
+Preparatory leave kab se milegi?,timetable
+Convocation ki tentative date?,timetable
+Orientation program schedule for freshers?,timetable
+What time does the college gate close?,timetable
+Exam schedule according to timetable?,timetable
+Is there a holiday for Eid?,timetable
+Christmas break kitne din ka hai?,timetable
+Academic session kab end hoga?,timetable
+Is there any change in Monday schedule?,timetable
+Substitution classes ki info kahan milegi?,timetable
+When is the internal viva scheduled?,timetable
+Practical record submission date?,timetable
+First year sessional schedule?,timetable
+Morning shift and evening shift timing?,timetable
+Is library open till night?,timetable
+Reading room 24 hours open hai?,timetable
+Canteen opening and closing time?,timetable
+When is the mid-term break?,timetable
+Spring break schedule?,timetable
+Is there a holiday on Karwa Chauth?,timetable
+Republic day celebration timing?,timetable
+Independence day function schedule?,timetable
+Annual function kab hai?,timetable
+Is there any technical fest this month?,timetable
+Hackathon schedule details?,timetable
+When is the next industry visit?,timetable
+Bus pickup and drop timings?,timetable
+Bus route timetable PDF?,timetable
+Gym and sports facility timings?,timetable
+Hostel mess breakfast timing?,timetable
+Mess dinner closing time?,timetable
+When do we have lab for physics?,timetable
+Chemistry lab batch timetable?,timetable
+English communication class timing?,timetable
+Yoga class schedule?,timetable
+Extra-curricular activity slot?,timetable
+Club meeting timings?,timetable
+Is tomorrow a local holiday?,timetable
+Janmashtami holiday date?,timetable
+College reopening date after winter break?,timetable
+When is the first internal?,timetable
+When is the second internal?,timetable
+Semester break duration?,timetable
+Last working day of the year?,timetable
+Administrative office timing?,timetable
+Principal office visiting hours?,timetable
+HOD meeting timings?,timetable
+Bank inside campus timing?,timetable
+Post office timing?,timetable
+Health center availability?,timetable
+How is the placement record of this college?,placements
+Top companies visit for placements?,placements
+Average package kitna milta hai?,placements
+Highest package last year kya tha?,placements
+How to register for campus placements?,placements
+Placement cell kahan par hai?,placements
+TPC login credentials kaise milege?,placements
+What are the eligibility criteria for placements?,placements
+Is 60 percent mandatory for all companies?,placements
+Which companies are coming next week?,placements
+Placement drive ka schedule kya hai?,placements
+Mock interview classes kab se hain?,placements
+Aptitude training kab shuru hogi?,placements
+Soft skills training provide karte hain?,placements
+Internship opportunities available hain?,placements
+Can I apply for off-campus placements?,placements
+Placement policy guidelines kya hain?,placements
+Companies visiting for mechanical branch?,placements
+MBA placement reports check karni hain?,placements
+Package details for TCS and Infosys?,placements
+Eligibility for Google placement drive?,placements
+How many students got placed last year?,placements
+Branch wise placement statistics chahiye?,placements
+Placement cell contact number?,placements
+Do companies allow students with backlogs?,placements
+What is the selection process for Amazon?,placements
+Resume building workshop kab hogi?,placements
+Job description kahan check kare?,placements
+Placement ke liye formal dress compulsory hai?,placements
+Pre-placement talk kab hai?,placements
+Technical test rounds ke bare mein batao?,placements
+Group discussion tips provide karenge?,placements
+Offer letter kab tak milega?,placements
+Can I decline an offer after selection?,placements
+Dual placement policy kya hai?,placements
+Placement registration fees hai kya?,placements
+Startups visit karte hain kya campus?,placements
+Core companies for civil engineering?,placements
+Highest international package kitna hai?,placements
+Companies coming for summer internship?,placements
+Internship with stipend milti hai kya?,placements
+Work from home jobs available hain?,placements
+Placement portal pe login nahi ho raha?,placements
+Update my resume on placement portal?,placements
+List of placed students this year?,placements
+Dream company criteria kya hai?,placements
+Pool campus drive kahan hoga?,placements
+Alumni placement support milta hai?,placements
+Salary package in hand kitna hota hai?,placements
+Placement training classes are mandatory?,placements
+Total companies visited last sem?,placements
+Mass recruiters vs core companies?,placements
+How to prepare for coding round?,placements
+Data structures and algorithms classes?,placements
+Language for technical rounds?,placements
+What is a good CGPA for placements?,placements
+Is there a mock test for aptitude?,placements
+Placement registration link?,placements
+Student coordinator for placements?,placements
+Training and Placement Officer name?,placements
+Job location of placed students?,placements
+Can I get placed in 2nd year?,placements
+Internship converted to PPO process?,placements
+What is a PPO in placements?,placements
+Companies for electronics and communication?,placements
+Highest package for civil branch?,placements
+Companies for MSc students?,placements
+Are there placements for PhD?,placements
+Career counseling center location?,placements
+Is there any startup incubator?,placements
+Entrepreneurship cell activities?,placements
+How to get an internship in Google?,placements
+Summer training certificate requirement?,placements
+Minor project impact on placement?,placements
+Major project and placement?,placements
+Does attendance matter for placement?,placements
+Is English speaking mandatory for job?,placements
+Mock GD sessions dates?,placements
+Company specific preparation notes?,placements
+Previous year placement papers?,placements
+Coding platforms for practice?,placements
+Placement statistics for 2025 batch?,placements
+Current placement trends in college?,placements
+Highest salary in CSE department?,placements
+Is there any bond for campus jobs?,placements
+Joining date after selection?,placements
+What are the hostel charges per year?,hostel
+Hostel mein room kaise allot hoga?,hostel
+AC rooms available hain kya?,hostel
+Hostel fees with mess kitni hai?,hostel
+Mess menu kya hai aaj ka?,hostel
+Is there a separate hostel for girls?,hostel
+Hostel rules and regulations batao?,hostel
+Night out permission kaise leni hai?,hostel
+In-time kya hai hostel ka?,hostel
+Hostel mein wifi speed kaisi hai?,hostel
+Are laundry services available in hostel?,hostel
+Hostel room change kar sakte hain?,hostel
+Drinking water facility kaisi hai?,hostel
+Hostel warden ka contact number?,hostel
+Emergency mein kisse contact kare hostel mein?,hostel
+Hostel mein outsiders allowed hain?,hostel
+Can my parents stay in hostel for a day?,hostel
+Guest room booking process kya hai?,hostel
+Hostel leave application format?,hostel
+Medical facility available hai hostel mein?,hostel
+Hostel gym timings kya hain?,hostel
+Canteen timings for hostel students?,hostel
+Hot water available hai winters mein?,hostel
+Hostel mein induction allowed hai?,hostel
+Electric charges extra dene hote hain?,hostel
+Hostel admission form kahan milega?,hostel
+Last date for hostel registration?,hostel
+Is it mandatory to stay in hostel?,hostel
+Hostel security deposit refund process?,hostel
+Ragging complaints kahan kare hostel mein?,hostel
+Common room mein TV facility hai?,hostel
+Hostel library timings?,hostel
+Power backup available hai hostel mein?,hostel
+Washroom cleaning schedule kya hai?,hostel
+Hostel furniture mein kya kya milega?,hostel
+Can I bring my own cooler?,hostel
+Hostel garden maintenance?,hostel
+Lift facility available hai hostel mein?,hostel
+Hostel address for courier delivery?,hostel
+Mess food quality complaint kahan kare?,hostel
+Vegetarian mess hai ya non-veg bhi?,hostel
+Hostel fest kab hota hai?,hostel
+Sports facility inside hostel?,hostel
+Hostel room clean kab hota hai?,hostel
+Is there a temple inside hostel area?,hostel
+Parking facility for hostelers?,hostel
+Two wheeler allowed hai hostel mein?,hostel
+Hostel gate closing time on Sunday?,hostel
+What is the fine for late entry?,hostel
+Hostel discipline committee members?,hostel
+What is the room size?,hostel
+Triple sharing rooms available hain?,hostel
+Single seater rooms cost?,hostel
+Double sharing room details?,hostel
+Is there a study table in the room?,hostel
+Almirah provide karte hain?,hostel
+Is mattress included in hostel fees?,hostel
+Hostel entry and exit register rules?,hostel
+Can I keep a laptop in hostel?,hostel
+Ironing facility in hostel?,hostel
+How to complain about broken lights?,hostel
+Plumber availability in hostel?,hostel
+Electrician contact in hostel?,hostel
+Hostel night guard name?,hostel
+Security in girls hostel?,hostel
+CCTV coverage in hostel?,hostel
+Is there a pantry in hostel?,hostel
+Can we cook in the room?,hostel
+Is electric kettle allowed?,hostel
+Hostel party rules?,hostel
+Birthday celebration rules?,hostel
+Can I go home on weekends?,hostel
+Gate pass for weekend leave?,hostel
+Local guardian requirement?,hostel
+Visitor room location?,hostel
+Hostel sports ground?,hostel
+Table tennis in hostel?,hostel
+Badminton court in hostel?,hostel
+How is the mess food?,hostel
+Can I change my mess plan?,hostel
+Is mess fee refundable?,hostel
+Special food on festivals?,hostel
+Mess committee members?,hostel
+Hostel warden office hours?,hostel
+Hostel fee receipt for tax?,hostel
+How to vacate the hostel?,hostel
+Room shifting process?,hostel
+Hostel night attendance time?,hostel
+Is there a study hall in hostel?,hostel
+Where is the central library located?,library
+Library timings kya hain?,library
+Is library open on holidays?,library
+Library card kaise banaye?,library
+How many books can I borrow at once?,library
+Fine for late return of books?,library
+Library portal login kaise kare?,library
+Can I renew books online?,library
+Library membership fees kitni hai?,library
+E-books access kaise kare?,library
+How to find a book in the library?,library
+Journal section kahan par hai?,library
+Are previous year papers available in library?,library
+Reference books ghar le ja sakte hain?,library
+Digital library access password?,library
+Newspapers and magazines section?,library
+Silent study zone rules?,library
+Library mein bags allowed hain?,library
+Photocopy facility available hai library mein?,library
+Can I suggest a new book for library?,library
+Library staff contact details?,library
+What if I lose my library card?,library
+Duplicate library card charges?,library
+Penalty for damaging library books?,library
+Is there a reading room in library?,library
+Library mein laptop allowed hai?,library
+WiFi access in library area?,library
+Competitive exam books available hain?,library
+GATE and CAT exam books section?,library
+Novels and story books hain kya?,library
+Library inventory check kaise kare?,library
+Book return date kaise extend kare?,library
+Can I donate books to college library?,library
+Departmental library vs central library?,library
+Library mein AC hall hai kya?,library
+Group discussion room available hai?,library
+Last date for book submission before exams?,library
+Fine waive off ho sakta hai?,library
+Library clearance for degree?,library
+Books return karne ka process?,library
+Online book reservation system?,library
+Research papers access link?,library
+Library orientation kab hoga?,library
+Can we eat inside the library?,library
+Scanning facility in library?,library
+Project reports collection kahan hai?,library
+Daily attendance in library register?,library
+Library membership for alumni?,library
+Thesis submission in library?,library
+Library closing bell timing?,library
+Is there a night reading room?,library
+Library books for first year?,library
+How to use the library OPAC?,library
+Online catalog for books?,library
+Can I bring my own books to library?,library
+Library membership for faculty?,library
+Is there a separate section for PhD?,library
+Current affairs magazines list?,library
+New arrival books list?,library
+Library security guard name?,library
+Are students allowed to borrow journals?,library
+Back volumes of journals?,library
+Encyclopedias available hain kya?,library
+Dictionaries and thesaurus location?,library
+Map and atlas section?,library
+Braille books available hain?,library
+Library committee members?,library
+How to become a library volunteer?,library
+Library automation system name?,library
+RFID tags for books?,library
+Self-check-out kiosk?,library
+Is there a mobile app for library?,library
+Library newsletter subscription?,library
+Rare books collection?,library
+Digital repository link?,library
+Institutional repository access?,library
+Can I get a book from other libraries?,library
+Inter-library loan process?,library
+Library feedback form?,library
+Book exhibition dates?,library
+How to check book availability?,library
+Book due date notification?,library
+Library membership card validity?,library
+Clearance from library for TC?,library
+Library books returning on weekend?,library
+Book drop box location?,library
+Library basement section?,library
+Library 1st floor section?,library
+Science books section?,library
+Literature section in library?,library
+Library gate entry system?,library
+How many times can I renew a book?,library
+What scholarships are available for students?,scholarships
+Scholarship ke liye apply kaise kare?,scholarships
+Eligibility for merit scholarship?,scholarships
+Income certificate required for scholarship?,scholarships
+Last date for scholarship application?,scholarships
+Post-matric scholarship portal link?,scholarships
+State government scholarship details?,scholarships
+Central sector scholarship eligibility?,scholarships
+Documents needed for scholarship renewal?,scholarships
+Is there a scholarship for SC/ST students?,scholarships
+Minority scholarship ka kya process hai?,scholarships
+Scholarship amount kab tak aayega?,scholarships
+How to check scholarship status online?,scholarships
+College se scholarship form verify kaise karwaye?,scholarships
+Single girl child scholarship available hai?,scholarships
+Scholarship for physically challenged students?,scholarships
+Can I apply for two scholarships?,scholarships
+Scholarship interview kab hoga?,scholarships
+Private company scholarships list?,scholarships
+NGO scholarship support in college?,scholarships
+Required percentage for scholarship renewal?,scholarships
+Does attendance affect scholarship?,scholarships
+Scholarship office kahan par hai?,scholarships
+Application rejection ka reason kaise jane?,scholarships
+Bonafide certificate for scholarship?,scholarships
+Bank account link with Aadhaar for scholarship?,scholarships
+NSP portal registration help?,scholarships
+Scholarship helpdesk number?,scholarships
+Fee concession vs scholarship difference?,scholarships
+Is scholarship available for hostelers?,scholarships
+What if I change my course after scholarship?,scholarships
+Scholarship for sports achievers?,scholarships
+EWS scholarship criteria kya hai?,scholarships
+Distance education students scholarship?,scholarships
+Scholarship payment proof kahan submit kare?,scholarships
+How to write application for scholarship?,scholarships
+Scholarship committee members list?,scholarships
+Are there any scholarships for MBA?,scholarships
+PhD research fellowship details?,scholarships
+Inspire scholarship application process?,scholarships
+Bihar student credit card scheme?,scholarships
+UP scholarship portal latest news?,scholarships
+National overseas scholarship details?,scholarships
+Corporate CSR scholarships for students?,scholarships
+Can I get a laptop under scholarship?,scholarships
+Scholarship amount credited to college or student?,scholarships
+Income limit for scholarship eligibility?,scholarships
+Is original marksheet required for scholarship?,scholarships
+Scholarship amount kitna milta hai?,scholarships
+Renewal form kab bharna hai?,scholarships
+How to link mobile with NSP?,scholarships
+OBC scholarship eligibility?,scholarships
+Scholarship for students from rural areas?,scholarships
+Can I get scholarship for higher studies?,scholarships
+International scholarships for college students?,scholarships
+Does failing a subject stop scholarship?,scholarships
+Scholarship for students with single parents?,scholarships
+Aadhar seeding status for scholarship?,scholarships
+PFMS status check for scholarship?,scholarships
+Scholarship payment failure reasons?,scholarships
+How to rectify error in scholarship form?,scholarships
+Is there any exam for scholarship?,scholarships
+Scholarship based on entrance rank?,scholarships
+Full tuition fee refund scholarship?,scholarships
+Books and stationery allowance?,scholarships
+Can I get scholarship for internship?,scholarships
+How to get scholarship for MS abroad?,scholarships
+Scholarship list of selected students?,scholarships
+When will the scholarship list be out?,scholarships
+Is parent income proof mandatory?,scholarships
+Form 16 for scholarship application?,scholarships
+Affidavit for gap year scholarship?,scholarships
+Scholarship for arts and culture?,scholarships
+Can I get scholarship for being topper?,scholarships
+Cash prize for university rank holders?,scholarships
+Scholarship for children of defense personnel?,scholarships
+Scholarship for railway employees children?,scholarships
+Is there a quota for scholarship?,scholarships
+How to apply for Medhaavi scholarship?,scholarships
+AICTE Pragati scholarship details?,scholarships
+Scholarship for girls in technical education?,scholarships
+Saksham scholarship for disabled?,scholarships
+Swanath scholarship for orphans?,scholarships
+How to apply for Prime Minister scholarship?,scholarships
+Is there a local MLA scholarship?,scholarships
+Religious minority scholarship eligibility?,scholarships
+Scholarship for excellence in research?,scholarships
+Publication based scholarship?,scholarships
+Can I get scholarship for summer projects?,scholarships
+Scholarship verification last date?,scholarships
+Nodal officer for scholarship in college?,scholarships
+How to apply for bonafide certificate?,certificates
+Degree certificate kab milega?,certificates
+Provisional degree kaise milti hai?,certificates
+Migration certificate apply process?,certificates
+Character certificate kahan se milega?,certificates
+Fees for duplicate marksheet?,certificates
+Transfer certificate application format?,certificates
+Gap certificate kaise banaye?,certificates
+Bonafide certificate for bus pass?,certificates
+Documents required for degree collection?,certificates
+Can I get my certificates via post?,certificates
+How long it takes to get migration?,certificates
+Urgent certificate service available hai?,certificates
+Original certificates college mein jama hain?,certificates
+Course completion certificate kab milega?,certificates
+Duplicate ID card application?,certificates
+Consolidated marksheet request?,certificates
+Certificate verification for jobs?,certificates
+Attestation of documents by principal?,certificates
+Transcript for MS application process?,certificates
+Backlog certificate kaise milega?,certificates
+Medium of instruction certificate?,certificates
+Fee paid certificate for income tax?,certificates
+Railway concession form kahan se le?,certificates
+Convocation degree collection rules?,certificates
+Name correction in marksheet?,certificates
+Father name change in certificate?,certificates
+Date of birth correction process?,certificates
+Lost my original degree what to do?,certificates
+FIR copy required for duplicate certificate?,certificates
+Gazette notification for name change?,certificates
+Provisional certificate validity period?,certificates
+Degree certificate format download?,certificates
+Authorized person can collect my degree?,certificates
+Online portal for certificate request?,certificates
+Track my certificate application status?,certificates
+Admin office timings for certificates?,certificates
+Application for name spelling change?,certificates
+Certificate for internship completion?,certificates
+NSS and NCC certificates distribution?,certificates
+Merit certificates for toppers?,certificates
+Participation certificate for college fest?,certificates
+Official transcript charges for WES?,certificates
+Semester wise marksheet download?,certificates
+Provisional migration certificate?,certificates
+Duplicate TC charges kitne hain?,certificates
+Caste certificate verification?,certificates
+Gap year affidavit format?,certificates
+Bonafide for passport application?,certificates
+Degree verification helpline?,certificates
+How to apply for re-degree?,certificates
+Is provisional certificate enough for job?,certificates
+When is the convocation ceremony?,certificates
+Degree certificate in absentia?,certificates
+Postal address for receiving degree?,certificates
+How to correct address in records?,certificates
+Change of branch certificate?,certificates
+Certificate for sports achievements?,certificates
+Extra-curricular activity certificate?,certificates
+Who issues the character certificate?,certificates
+Is TC required for PG admission?,certificates
+How to get back original 10th marksheet?,certificates
+Security deposit refund certificate?,certificates
+Course equivalence certificate?,certificates
+Official stamp on certificates?,certificates
+Notarized copy of degree?,certificates
+How to get transcripts for WES evaluation?,certificates
+Sealed envelope for transcripts?,certificates
+Attestation from registrar?,certificates
+Application for college leaving certificate?,certificates
+Conduct certificate from HOD?,certificates
+Is migration certificate required for job?,certificates
+How to get duplicate library clearance?,certificates
+No dues certificate from accounts?,certificates
+No dues certificate from hostel?,certificates
+No dues from sports department?,certificates
+Final clearance certificate for degree?,certificates
+Bonafide for opening bank account?,certificates
+Bonafide for education loan?,certificates
+Income certificate from college?,certificates
+Certificate for attending workshop?,certificates
+Industrial visit participation certificate?,certificates
+Volunteer certificate for events?,certificates
+Placement selection certificate?,certificates
+Gate pass for original documents?,certificates
+How to get old records from college?,certificates
+Degree certificate hard copy vs soft copy?,certificates
+QR code on degree certificate?,certificates
+Digital locker for college certificates?,certificates
+How to upload degree to DigiLocker?,certificates
