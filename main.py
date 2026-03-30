@@ -133,6 +133,22 @@ def init_db():
         FOREIGN KEY (user_id) REFERENCES users(id)
     )""")
 
+    c.execute("""CREATE TABLE IF NOT EXISTS leave_applications (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    student_id INTEGER NOT NULL,
+    student_name TEXT NOT NULL,
+    roll_number TEXT NOT NULL,
+    from_date TEXT NOT NULL,
+    to_date TEXT NOT NULL,
+    reason TEXT NOT NULL,
+    status TEXT DEFAULT 'pending',
+    faculty_comment TEXT DEFAULT '',
+    applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    reviewed_at TIMESTAMP,
+    reviewed_by INTEGER,
+    FOREIGN KEY (student_id) REFERENCES users(id)
+    )""")
+
     conn.commit()
 
     # Seed demo data if empty
@@ -1024,6 +1040,161 @@ def attendance_predictor():
             "eligible": overall_pct >= 75
         }
     })
+@app.post("/student/leave/apply")
+def apply_leave():
+    err = require_auth("student")
+    if err: return err
+    user = current_user()
+    data = request.get_json(silent=True) or {}
+
+    from_date = (data.get("from_date") or "").strip()
+    to_date = (data.get("to_date") or "").strip()
+    reason = (data.get("reason") or "").strip()
+
+    if not all([from_date, to_date, reason]):
+        return jsonify({"error": "All fields are required"}), 400
+
+    conn = get_db()
+    conn.execute(
+        "INSERT INTO leave_applications (student_id, student_name, roll_number, from_date, to_date, reason) VALUES (?,?,?,?,?,?)",
+        (user["id"], user["name"], user["roll_number"], from_date, to_date, reason)
+    )
+    conn.commit()
+    conn.close()
+    return jsonify({"success": True, "message": "Leave application submitted successfully!"})
+
+
+@app.get("/student/leave/history")
+def leave_history():
+    err = require_auth("student")
+    if err: return err
+    user = current_user()
+    conn = get_db()
+    leaves = conn.execute(
+        "SELECT * FROM leave_applications WHERE student_id=? ORDER BY applied_at DESC",
+        (user["id"],)
+    ).fetchall()
+    conn.close()
+    return jsonify({"leaves": [dict(l) for l in leaves]})
+
+
+@app.get("/faculty/leave/applications")
+def all_leave_applications():
+    err = require_auth("faculty")
+    if err: return err
+    conn = get_db()
+    leaves = conn.execute(
+        "SELECT * FROM leave_applications ORDER BY applied_at DESC"
+    ).fetchall()
+    conn.close()
+    return jsonify({"leaves": [dict(l) for l in leaves]})
+
+
+@app.patch("/faculty/leave/<int:leave_id>")
+def review_leave(leave_id):
+    err = require_auth("faculty")
+    if err: return err
+    user = current_user()
+    data = request.get_json(silent=True) or {}
+
+    status = data.get("status")
+    comment = data.get("comment", "")
+
+    if status not in ["approved", "rejected"]:
+        return jsonify({"error": "Status must be approved or rejected"}), 400
+
+    conn = get_db()
+    conn.execute(
+        "UPDATE leave_applications SET status=?, faculty_comment=?, reviewed_at=?, reviewed_by=? WHERE id=?",
+        (status, comment, datetime.now().isoformat(), user["id"], leave_id)
+    )
+    conn.commit()
+    conn.close()
+    return jsonify({"success": True, "message": f"Leave {status} successfully!"})
+
+@app.post("/student/mark-attendance-face")
+def mark_attendance_face():
+    err = require_auth("student")
+    if err: return err
+    user = current_user()
+
+    if not FACE_RECOGNITION_AVAILABLE:
+        return jsonify({"error": "Face recognition not available"}), 503
+
+    data = request.get_json(silent=True) or {}
+    image_b64 = data.get("image")
+    subject = (data.get("subject") or "General").strip()
+
+    if not image_b64:
+        return jsonify({"error": "image is required"}), 400
+
+    try:
+        import base64
+        import cv2
+        import face_recognition
+        import pickle as pkl
+
+        if "," in image_b64:
+            image_b64 = image_b64.split(",")[1]
+        img_bytes = base64.b64decode(image_b64)
+        img_array = np.frombuffer(img_bytes, dtype=np.uint8)
+        img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
+        rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+        # Get student's stored face encoding
+        conn = get_db()
+        student = conn.execute(
+            "SELECT face_encoding FROM users WHERE id=?",
+            (user["id"],)
+        ).fetchone()
+
+        if not student or not student["face_encoding"]:
+            conn.close()
+            return jsonify({"error": "Face not registered. Please register your face first."}), 400
+
+        stored_encoding = pkl.loads(student["face_encoding"])
+
+        # Detect face in captured image
+        face_locations = face_recognition.face_locations(rgb_img)
+        if not face_locations:
+            conn.close()
+            return jsonify({"verified": False, "message": "No face detected. Please try again."}), 200
+
+        face_encodings = face_recognition.face_encodings(rgb_img, face_locations)
+        if not face_encodings:
+            conn.close()
+            return jsonify({"verified": False, "message": "Could not process face."}), 200
+
+        distance = face_recognition.face_distance([stored_encoding], face_encodings[0])[0]
+
+        if distance >= 0.50:
+            conn.close()
+            return jsonify({"verified": False, "message": "Face not matched. Please try again."}), 200
+
+        # Mark attendance
+        today = date.today().isoformat()
+        time_now = datetime.now().strftime("%H:%M:%S")
+
+        try:
+            conn.execute(
+                "INSERT OR IGNORE INTO attendance (user_id, name, roll_number, subject, date, time, status) VALUES (?,?,?,?,?,?,?)",
+                (user["id"], user["name"], user["roll_number"], subject, today, time_now, "present")
+            )
+            conn.commit()
+            conn.close()
+            return jsonify({
+                "verified": True,
+                "message": f"✅ Attendance marked successfully for {subject}!",
+                "time": time_now,
+                "date": today
+            })
+        except Exception as e:
+            conn.close()
+            return jsonify({"error": str(e)}), 500
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @app.post("/chat")
 def chat():
     data = request.get_json(silent=True) or {}
