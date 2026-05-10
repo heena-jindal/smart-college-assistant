@@ -1,4 +1,5 @@
-*.pkl
+
+
 college.db
 __pycache__/
 *.pyc
