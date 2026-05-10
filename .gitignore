@@ -1,8 +1,5 @@
-
-
-college.db
+venv312/
 __pycache__/
 *.pyc
+frontend/
 .env
-face_module/__pycache__/
-chatbot/__pycache__/
