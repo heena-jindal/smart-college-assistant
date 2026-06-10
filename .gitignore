@@ -1,0 +1,9 @@
+smart-college-backend/venv312/
+smart-college-backend/__pycache__/
+
+smart-college-frontend/node_modules/
+smart-college-frontend/.next/
+
+.env
+.env.local
+*.pyc
