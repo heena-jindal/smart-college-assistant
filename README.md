@@ -1,241 +1,110 @@
-# 🎓 Smart College Assistant
 
-<div align="center">
+# Smart College Assistant 🎓
 
-![Python](https://img.shields.io/badge/Python-3.12-blue?style=for-the-badge\&logo=python)
-![Flask](https://img.shields.io/badge/Flask-Backend-black?style=for-the-badge\&logo=flask)
-![Next.js](https://img.shields.io/badge/Next.js-Frontend-black?style=for-the-badge\&logo=next.js)
-![AI Powered](https://img.shields.io/badge/AI-Powered-success?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)
+Modern student assistance platform built using TypeScript to improve academic accessibility, organization, and interaction for students.
 
-### 🚀 AI-Powered Smart College Assistant for Students
+---
 
-An intelligent college assistant designed to help students with academic guidance, college information, AI-powered conversations, and smart campus interactions.
 
-</div>
+---
+## 📌 Project Overview
+
+Smart College Assistant is a web-based platform designed to help students manage and interact with academic resources more efficiently.
+
+The project focuses on creating a modern and user-friendly interface while solving common student-related problems through technology.
 
 ---
 
 ## ✨ Features
 
-### 🤖 AI Chatbot
-
-* Intelligent conversational assistant
-* Academic query support
-* College-related information
-* Real-time responses
-
-### 🎓 Student Assistance
-
-* Subject guidance
-* Academic support
-* College information retrieval
-* Student-friendly interaction
-
-### 😀 Face Recognition Module
-
-* Face detection support
-* Smart identity verification
-* Attendance-related integration possibilities
-
-### 📊 Dashboard System
-
-* Modern user interface
-* Student dashboard
-* Easy navigation
-* Interactive experience
-
-### 🌐 Full Stack Architecture
-
-* Frontend built using Next.js
-* Backend powered by Flask
-* API-based communication
-* Scalable architecture
-
+- Student-focused interface
+- Smart assistant functionality
+- Responsive modern UI
+- Fast and interactive experience
+- Clean frontend structure
+- Real-world deployment workflow
 ---
 
-# 🏗️ Project Structure
+## 🛠 Tech Stack
+
+### Frontend
+- TypeScript
+- HTML
+- CSS
+
+### Tools & Platforms
+- GitHub
+- VS Code
+- Deployment Platforms
+
+---
+## 📷 Project Screenshots
+
+### Homepage
+![Homepage](images/homepage-main.png)
+
+### Dashboard
+![Dashboard](images/dashboard-main.png)
+
+### Assistant Interface
+![Assistant UI](images/chatbot-main.png)
+
+---
+## 📂 Project Structure
 
 ```bash
-smart-college-assistant
+smart-college-assistant/
 │
-├── smart-college-frontend
-│   ├── app
-│   ├── components
-│   ├── hooks
-│   ├── images
-│   ├── styles
-│   └── package.json
-│
-├── smart-college-backend
-│   ├── chatbot
-│   ├── face_module
-│   ├── main.py
-│   ├── requirements.txt
-│   └── college.db
-│
+├── images/
+├── src/
+├── public/
 ├── README.md
-└── .gitignore
+└── package.json
 ```
 
 ---
 
-# 🛠️ Tech Stack
+## ▶️ How To Run Locally
 
-## Frontend
-
-* ⚛️ Next.js
-* 🎨 Tailwind CSS
-* 🧩 React Components
-* 🔥 Modern UI Design
-
-## Backend
-
-* 🐍 Python
-* 🌶️ Flask
-* 🤖 OpenRouter AI
-* 📦 REST APIs
-
-## Database
-
-* 🗄️ SQLite
-
-## AI Integration
-
-* 🤖 LLM-based chatbot
-* 🧠 Natural Language Processing
-* 💬 Smart conversations
-
----
-
-# ⚙️ Installation
-
-## 1️⃣ Clone Repository
+1. Clone the repository
 
 ```bash
-git clone https://github.com/heena-jindal/smart-college-assistant.git
-
-cd smart-college-assistant
+https://github.com/heena-jindal/smart-college-assistant
 ```
 
----
-
-## 2️⃣ Backend Setup
+2. Install dependencies
 
 ```bash
-cd smart-college-backend
-
-python -m venv venv
-
-venv\Scripts\activate
-
-pip install -r requirements.txt
-```
-
-Run backend:
-
-```bash
-python main.py
-```
-
-Backend runs on:
-
-```text
-http://localhost:5000
-```
-
----
-
-## 3️⃣ Frontend Setup
-
-```bash
-cd smart-college-frontend
-
 npm install
 ```
 
-Run frontend:
+3. Run the development server
 
 ```bash
 npm run dev
 ```
 
-Frontend runs on:
+---
 
-```text
-http://localhost:3000
-```
+## 📈 Future Improvements
+
+- AI chatbot integration
+- Authentication system
+- Database connectivity
+- Student performance analytics
+- Cloud deployment enhancements
+
+---
+## 🔑 Demo Credentials
+- Faculty: FAC001 / faculty123
+- Student: STU001 / student123
 
 ---
 
-# 🔗 API Flow
+## 👩‍💻 Author
 
-```text
-Student
-   │
-   ▼
-Frontend (Next.js)
-   │
-   ▼
-Backend (Flask)
-   │
-   ▼
-AI Model / Database
-   │
-   ▼
-Response
-```
+Heena Jindal
 
 ---
 
-# 🚀 Future Improvements
-
-* 🎯 Student Login System
-* 📅 Attendance Tracking
-* 📚 Notes Management
-* 📝 Assignment Tracker
-* 📊 Analytics Dashboard
-* 🔔 Smart Notifications
-* 🎤 Voice Assistant
-* 📱 Mobile Application
-
----
-
-# 👩‍💻 Developer
-
-### Heena Jindal
-
-🎓 AIML Student
-💡 AI & Machine Learning Enthusiast
-🌩️ Future Cloud Developer
-🚀 Full Stack & AI Projects
-
-### Connect With Me
-
-* GitHub: https://github.com/heena-jindal
-
----
-
-# ⭐ Support
-
-If you like this project:
-
-🌟 Star this repository
-
-🍴 Fork it
-
-💡 Contribute ideas
-
-🚀 Build something amazing
-
----
-
-<div align="center">
-
-### 🎓 Smart College Assistant
-
-Making Student Life Smarter With AI 🤖
-
-⭐ Star The Repository If You Like It ⭐
-
-</div>
+⭐ Building impactful projects and continuously learning new technologies.
