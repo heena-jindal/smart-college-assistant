@@ -108,38 +108,6 @@ smart-college-assistant
 
 ---
 
-# 📸 Project Screenshots
-
-## 🏠 Homepage
-
-> Add screenshot here
-
-```text
-smart-college-frontend/images/homepage-main.png
-```
-
----
-
-## 📊 Dashboard
-
-> Add screenshot here
-
-```text
-smart-college-frontend/images/dashboard-main.png
-```
-
----
-
-## 🤖 Chatbot Interface
-
-> Add screenshot here
-
-```text
-smart-college-frontend/images/chatbot-main.png
-```
-
----
-
 # ⚙️ Installation
 
 ## 1️⃣ Clone Repository
