@@ -44,7 +44,7 @@ The project focuses on creating a modern and user-friendly interface while solvi
 ![Homepage](smart-college-frontend/images/chatbot-main.png)
 
 ### Dashboard
-![Dashboard](images/dashboard-main.png)
+![Dashboard](smart-college-frontend/images/dashboard-main.png)
 
 ### Assistant Interface
 ![Assistant UI](images/chatbot-main.png)
