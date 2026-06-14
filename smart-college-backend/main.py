@@ -1217,13 +1217,16 @@ def chat():
 
 if __name__ == "__main__":
     init_db()
+
     print("\n🚀 Smart College Assistant API")
     print("   Running on http://localhost:5000")
+
     print("\n📋 Demo Credentials:")
     print("   Faculty  — Roll: FAC001  Password: faculty123")
     print("   Student  — Roll: STU001  Password: student123")
     print("   Student  — Roll: STU002  Password: student123\n")
-    import os
-port = int(os.environ.get("PORT", 5000))
-app.run(host="0.0.0.0", port=port, debug=False)
 
+    import os
+
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)

@@ -18,3 +18,4 @@ six==1.17.0
 tzdata==2025.3
 setuptools==69.5.1
 pillow==12.1.1
+gunicorn
