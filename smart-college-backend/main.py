@@ -17,6 +17,14 @@ import os
 import pickle
 import numpy as np
 
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS')
+    response.headers.add('Access-Control-Allow-Credentials', 'true')
+    return response
+
 # ── optional face recognition ──────────────────────────────────────────────
 try:
     import face_recognition
@@ -37,18 +45,13 @@ except ImportError:
     CHATBOT_AVAILABLE = False
     print("⚠️  Chatbot module not found")
 
-from flask_cors import CORS
-
-app = Flask(__name__)
-app.secret_key = os.urandom(24)
+from flask_cors import CORS, cross_origin
 
 CORS(app, 
      supports_credentials=True,
-     origins=[
-         "https://smart-college-assistant-hazel.vercel.app",
-         "https://smart-college-assistant-3g8are3qa-heena-aim124-5180s-projects.vercel.app",
-         "http://localhost:3000"
-     ])
+     resources={r"/*": {"origins": "*"}},
+     allow_headers=["Content-Type", "Authorization"],
+     methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"])
 
 
 # ════════════════════════════════════════════════════════════════════════════
