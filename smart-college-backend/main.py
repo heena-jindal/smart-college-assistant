@@ -37,11 +37,18 @@ except ImportError:
     CHATBOT_AVAILABLE = False
     print("⚠️  Chatbot module not found")
 
+from flask_cors import CORS
+
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-CORS(app, supports_credentials=True)
 
-DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "college.db")
+CORS(
+    app,
+    supports_credentials=True,
+    origins=[
+        "https://smart-college-assistant-hazel.vercel.app"
+    ]
+)
 
 
 # ════════════════════════════════════════════════════════════════════════════
