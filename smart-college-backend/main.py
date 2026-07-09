@@ -42,13 +42,13 @@ from flask_cors import CORS
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
-CORS(
-    app,
-    supports_credentials=True,
-    origins=[
-        "https://smart-college-assistant-hazel.vercel.app"
-    ]
-)
+CORS(app, 
+     supports_credentials=True,
+     origins=[
+         "https://smart-college-assistant-hazel.vercel.app",
+         "https://smart-college-assistant-3g8are3qa-heena-aim124-5180s-projects.vercel.app",
+         "http://localhost:3000"
+     ])
 
 
 # ════════════════════════════════════════════════════════════════════════════
