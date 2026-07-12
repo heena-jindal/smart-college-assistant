@@ -17,6 +17,26 @@ import os
 import pickle
 import numpy as np
 
+import jwt
+JWT_SECRET = os.environ.get("SECRET_KEY", "smartcollege123xyz")
+
+def create_token(user_id):
+    return jwt.encode({"user_id": user_id}, JWT_SECRET, algorithm="HS256")
+
+def get_user_from_token():
+    token = request.headers.get("Authorization", "").replace("Bearer ", "")
+    if not token:
+        return None
+    try:
+        data = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
+        conn = get_db()
+        user = conn.execute("SELECT id, name, roll_number, role, department FROM users WHERE id=?", (data["user_id"],)).fetchone()
+        conn.close()
+        return dict(user) if user else None
+    except:
+        return None
+        
+
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "smartcollege123xyz")
 
@@ -281,13 +301,7 @@ def _seed_demo_data(c):
 # ════════════════════════════════════════════════════════════════════════════
 
 def current_user():
-    uid = session.get("user_id")
-    if not uid:
-        return None
-    conn = get_db()
-    user = conn.execute("SELECT id, name, roll_number, role, department FROM users WHERE id=?", (uid,)).fetchone()
-    conn.close()
-    return dict(user) if user else None
+    return get_user_from_token()
 
 
 def require_auth(role=None):
@@ -308,23 +322,20 @@ def login():
     data = request.get_json(silent=True) or {}
     roll = (data.get("roll_number") or "").strip()
     password = (data.get("password") or "").strip()
-
     if not roll or not password:
         return jsonify({"error": "Roll number and password are required"}), 400
-
     conn = get_db()
     user = conn.execute(
         "SELECT * FROM users WHERE roll_number=? AND password_hash=?",
         (roll, _hash(password))
     ).fetchone()
     conn.close()
-
     if not user:
         return jsonify({"error": "Invalid roll number or password"}), 401
-
-    session["user_id"] = user["id"]
+    token = create_token(user["id"])
     return jsonify({
         "success": True,
+        "token": token,
         "user": {
             "id": user["id"],
             "name": user["name"],
