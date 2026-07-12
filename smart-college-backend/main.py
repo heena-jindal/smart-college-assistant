@@ -20,15 +20,41 @@ import numpy as np
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "smartcollege123xyz")
 
-CORS(app,
-     resources={r"/*": {"origins": [
-         "https://smart-college-assistant-hazel.vercel.app",
-         "http://localhost:3000"
-     ]}},
-     supports_credentials=True,
-     allow_headers=["Content-Type", "Authorization", "X-Requested-With"],
-     methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-     expose_headers=["Set-Cookie"])
+# Fix CORS
+@app.after_request
+def after_request(response):
+    origin = request.headers.get('Origin', '')
+    allowed = [
+        "https://smart-college-assistant-hazel.vercel.app",
+        "http://localhost:3000"
+    ]
+    if origin in allowed:
+        response.headers['Access-Control-Allow-Origin'] = origin
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+        response.headers['Access-Control-Allow-Methods'] = 'GET,POST,PUT,PATCH,DELETE,OPTIONS'
+    return response
+
+@app.route('/', defaults={'path': ''}, methods=['OPTIONS'])
+@app.route('/<path:path>', methods=['OPTIONS'])
+def handle_options(path):
+    response = jsonify({})
+    origin = request.headers.get('Origin', '')
+    allowed = [
+        "https://smart-college-assistant-hazel.vercel.app",
+        "http://localhost:3000"
+    ]
+    if origin in allowed:
+        response.headers['Access-Control-Allow-Origin'] = origin
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+        response.headers['Access-Control-Allow-Methods'] = 'GET,POST,PUT,PATCH,DELETE,OPTIONS'
+    return response, 200
+
+CORS(app, supports_credentials=True, origins=[
+    "https://smart-college-assistant-hazel.vercel.app",
+    "http://localhost:3000"
+])
 
 @app.after_request
 def after_request(response):
