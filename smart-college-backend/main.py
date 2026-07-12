@@ -17,7 +17,27 @@ import os
 import pickle
 import numpy as np
 
+app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY", "smartcollege123xyz")
+CORS(app, 
+     supports_credentials=True,
+     origins=[
+         "https://smart-college-assistant-hazel.vercel.app",
+         "http://localhost:3000"
+     ])
+
+DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "college.db")
+
 @app.after_request
+def after_request(response):
+    origin = request.headers.get('Origin')
+    if origin in ["https://smart-college-assistant-hazel.vercel.app", "http://localhost:3000"]:
+        response.headers['Access-Control-Allow-Origin'] = origin
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
+        response.headers['Access-Control-Allow-Methods'] = 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+    return response
+    
 def after_request(response):
     response.headers.add('Access-Control-Allow-Origin', '*')
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
@@ -45,13 +65,7 @@ except ImportError:
     CHATBOT_AVAILABLE = False
     print("⚠️  Chatbot module not found")
 
-from flask_cors import CORS, cross_origin
 
-CORS(app, 
-     supports_credentials=True,
-     resources={r"/*": {"origins": "*"}},
-     allow_headers=["Content-Type", "Authorization"],
-     methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"])
 
 
 # ════════════════════════════════════════════════════════════════════════════
