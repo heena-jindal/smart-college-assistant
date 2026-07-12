@@ -14,12 +14,16 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"
 
 async function apiFetch(path: string, opts: RequestInit = {}) {
+  const token = localStorage.getItem("token")
   const res = await fetch(`${API}${path}`, {
-    credentials: "include",
-    headers: { "Content-Type": "application/json" },
+    headers: { 
+      "Content-Type": "application/json",
+      ...(token ? {"Authorization": `Bearer ${token}`} : {})
+    },
     ...opts,
   })
   return res.json()
+}
 }
 
 function cn(...classes: (string | boolean | undefined)[]) {
@@ -294,7 +298,9 @@ function LoginPage({ onLogin }: { onLogin: (user: User) => void }) {
     const data = await apiFetch("/auth/login", { method: "POST", body: JSON.stringify({ roll_number: roll, password }) })
     setLoading(false)
     if (data.error) { setError(data.error); return }
+    localStorage.setItem("token", data.token)
     onLogin(data.user)
+}
   }
 
   const loginWithFace = async (imageBase64: string) => {
@@ -1490,8 +1496,10 @@ export default function App() {
 
   useEffect(() => { document.documentElement.classList.toggle("dark", dark) }, [dark])
 
-  const logout = async () => { await apiFetch("/auth/logout", { method: "POST" }); setUser(null) }
-
+  const logout = async () => { 
+    localStorage.removeItem("token")
+    setUser(null) 
+}
   if (loading) return (
     <div className="flex min-h-dvh items-center justify-center bg-background">
       <div className="text-center">
