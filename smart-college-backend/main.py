@@ -19,14 +19,16 @@ import numpy as np
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "smartcollege123xyz")
-CORS(app, 
-     supports_credentials=True,
-     origins=[
+
+CORS(app,
+     resources={r"/*": {"origins": [
          "https://smart-college-assistant-hazel.vercel.app",
          "http://localhost:3000"
-     ])
-
-DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "college.db")
+     ]}},
+     supports_credentials=True,
+     allow_headers=["Content-Type", "Authorization", "X-Requested-With"],
+     methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+     expose_headers=["Set-Cookie"])
 
 @app.after_request
 def after_request(response):
