@@ -78,17 +78,13 @@ function WebcamCapture({ onCapture, onCancel, mode }: {
   const [captured, setCaptured] = useState(false)
 
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => {
-        if (videoRef.current) { videoRef.current.srcObject = stream; setStreaming(true) }
-      })
-      .catch(() => alert("Cannot access webcam. Please allow camera access."))
-    return () => {
-      if (videoRef.current?.srcObject) {
-        (videoRef.current.srcObject as MediaStream).getTracks().forEach(t => t.stop())
-      }
-    }
-  }, [])
+    const token = localStorage.getItem("token")
+    if (!token) { setLoading(false); return }
+    apiFetch("/auth/me").then(data => { 
+        if (data.user) setUser(data.user)
+        setLoading(false) 
+    }).catch(() => setLoading(false))
+}, [])
 
   const capture = () => {
     setCountdown(3)
