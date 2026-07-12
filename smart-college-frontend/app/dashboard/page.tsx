@@ -543,6 +543,9 @@ function RemindersPanel() {
 // ════════════════════════════════════════════════════════════════
 // CHATBOT PANEL
 // ════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
+// CHATBOT PANEL
+// ════════════════════════════════════════════════════════════════
 function ChatbotPanel() {
   const [messages, setMessages] = useState<any[]>([])
   const [input, setInput] = useState("")
@@ -556,41 +559,64 @@ function ChatbotPanel() {
     try {
       const data = await apiFetch("/chat", { method: "POST", body: JSON.stringify({ message: userMsg }) })
       setMessages(prev => [...prev, { role: "bot", content: data.response, intent: data.intent, confidence: data.confidence }])
-    } catch { setMessages(prev => [...prev, { role: "bot", content: "Sorry, something went wrong." }]) }
+    } catch { 
+      setMessages(prev => [...prev, { role: "bot", content: "Sorry, something went wrong." }]) 
+    }
     setLoading(false)
   }
 
   return (
     <Card className="flex flex-col h-96">
-      <h3 className="mb-3 font-semibold text-foreground flex items-center gap-2"><MessageSquare className="h-4 w-4 text-primary" /> College Assistant Chatbot</h3>
-      <div className="flex-1 overflow-y-auto space-y-3 mb-3">
-        {messages.length === 0 && <p className="text-center text-xs text-muted-foreground py-8">Ask me about admissions, fees, exams, attendance, placements...</p>}
+      <h3 className="mb-3 font-semibold text-foreground flex items-center gap-2">
+        <MessageSquare className="h-4 w-4 text-primary" /> College Assistant Chatbot
+      </h3>
+      
+      {/* Messages Area */}
+      <div className="flex-1 overflow-y-auto space-y-3 mb-3 pr-1">
+        {messages.length === 0 && (
+          <p className="text-center text-xs text-muted-foreground py-8">
+            Ask me about admissions, fees, exams, attendance, placements...
+          </p>
+        )}
         {messages.map((m, i) => (
           <div key={i} className={cn("flex", m.role === "user" ? "justify-end" : "justify-start")}>
-            <div className={cn("max-w-[80%] rounded-2xl px-3 py-2 text-sm", m.role === "user" ? "bg-primary text-primary-foreground rounded-tr-sm" : "bg-muted text-foreground rounded-tl-sm")}>
+            <div className={cn("max-w-[80%] rounded-2xl px-3 py-2 text-sm", 
+              m.role === "user" ? "bg-primary text-primary-foreground rounded-tr-sm" : "bg-muted text-foreground rounded-tl-sm")}
+            >
               {m.content}
-              {m.role === "bot" && m.intent && (
-                <div className="mt-1 flex gap-1">
-                  <Badge text={m.intent} type="info" />
-                  {m.confidence !== undefined && <Badge text={`${Math.round(m.confidence * 100)}%`} type={m.confidence >= 0.8 ? "success" : "warning"} />}
-                </div>
-              )}
             </div>
           </div>
         ))}
-        {loading && <div className="flex justify-start"><div className="rounded-2xl rounded-tl-sm bg-muted px-4 py-2 text-sm text-muted-foreground">Typing...</div></div>}
+        {loading && (
+          <div className="flex justify-start">
+            <div className="bg-muted text-muted-foreground rounded-2xl rounded-tl-sm px-3 py-2 text-xs flex items-center gap-2">
+              <Loader2 className="h-3 w-3 animate-spin" /> Thinking...
+            </div>
+          </div>
+        )}
       </div>
+
+      {/* Input Action Area */}
       <div className="flex gap-2">
-        <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === "Enter" && send()} placeholder="Ask a question..."
-          className="flex-1 rounded-xl border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary" />
-        <button onClick={send} disabled={loading} className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50">
+        <input 
+          value={input} 
+          onChange={e => setInput(e.target.value)} 
+          onKeyDown={e => e.key === "Enter" && send()}
+          placeholder="Type your message..." 
+          disabled={loading}
+          className="flex-1 rounded-xl border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50" 
+        />
+        <button 
+          onClick={send} 
+          disabled={loading || !input.trim()}
+          className="flex items-center justify-center rounded-xl bg-primary p-2 text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
+        >
           <Send className="h-4 w-4" />
         </button>
       </div>
     </Card>
   )
 }
-
 // ════════════════════════════════════════════════════════════════
 // STUDENT ANALYTICS
 // ════════════════════════════════════════════════════════════════
