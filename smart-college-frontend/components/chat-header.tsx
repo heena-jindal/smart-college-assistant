@@ -1,8 +1,9 @@
 "use client"
 
-import { GraduationCap, Moon, Sun } from "lucide-react"
+import { GraduationCap, Moon, Sun, LayoutDashboard } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
+import Link from "next/link"
 
 export function ChatHeader() {
   const { theme, setTheme } = useTheme()
@@ -26,19 +27,28 @@ export function ChatHeader() {
         </div>
       </div>
 
-      {mounted && (
-        <button
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          aria-label="Toggle theme"
-          className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background text-foreground transition-all hover:bg-accent hover:text-accent-foreground"
+      <div className="flex items-center gap-2">
+        <Link
+          href="/dashboard"
+          className="flex items-center gap-1.5 rounded-lg border border-border bg-background px-3 py-2 text-xs font-medium text-foreground transition-all hover:bg-accent"
         >
-          {theme === "dark" ? (
-            <Sun className="h-4 w-4" />
-          ) : (
-            <Moon className="h-4 w-4" />
-          )}
-        </button>
-      )}
+          <LayoutDashboard className="h-3.5 w-3.5" />
+          <span>Dashboard</span>
+        </Link>
+
+        {mounted && (
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            aria-label="Toggle theme"
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background text-foreground transition-all hover:bg-accent hover:text-accent-foreground"
+          >
+            {theme === "dark" ? (
+              <Sun className="h-4 w-4" />
+            ) : (
+              <Moon className="h-4 w-4" )}
+          </button>
+        )}
+      </div>
     </header>
   )
 }
