@@ -45,7 +45,8 @@ export function ChatHeader() {
             {theme === "dark" ? (
               <Sun className="h-4 w-4" />
             ) : (
-              <Moon className="h-4 w-4" )}
+              <Moon className="h-4 w-4" />
+            )}
           </button>
         )}
       </div>
