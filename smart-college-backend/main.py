@@ -39,9 +39,7 @@ def get_user_from_token():
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "smartcollege123xyz")
 
-# CORS Setup
-CORS(app, supports_credentials=True, origins="*")
-
+# Single CORS Handler (prevents duplicate header conflicts)
 @app.after_request
 def apply_cors_headers(response):
     origin = request.headers.get('Origin')
@@ -50,8 +48,8 @@ def apply_cors_headers(response):
         response.headers['Access-Control-Allow-Credentials'] = 'true'
     else:
         response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
-    response.headers['Access-Control-Allow-Methods'] = 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, X-Requested-With'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, PATCH, DELETE, OPTIONS'
     return response
 
 @app.route('/health', methods=['GET'])
