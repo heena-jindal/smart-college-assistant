@@ -1,32 +1,40 @@
 "use client"
 
 import { useState, useEffect, useCallback, useRef } from "react"
+import Link from "next/link"
 import {
   GraduationCap, LogOut, Moon, Sun, ClipboardList, Bell,
   CheckSquare, Users, BarChart2, MessageSquare, Upload, Megaphone,
   Plus, Trash2, Check, Calendar, AlertCircle, TrendingUp, Award,
   Camera, Eye, EyeOff, ArrowLeft, UserPlus, Send, X, Loader2,
-  ScanFace, ShieldCheck
+  ScanFace, ShieldCheck, Bot
 } from "lucide-react"
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, Legend } from "recharts"
 
-const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"
+const DEFAULT_BACKEND_URL = "https://smart-college-assistant-backend.onrender.com"
+const API = (process.env.NEXT_PUBLIC_API_URL || DEFAULT_BACKEND_URL).replace(/\/$/, "")
 
 async function apiFetch(path: string, opts: RequestInit = {}) {
   const token = typeof window !== "undefined" ? localStorage.getItem("token") : null
-  const res = await fetch(`${API}${path}`, {
-    headers: {
-      "Content-Type": "application/json",
-      ...(token ? { "Authorization": `Bearer ${token}` } : {})
-    },
-    ...opts,
-  })
-  return res.json()
-}
-
-function cn(...classes: (string | boolean | undefined)[]) {
-  return classes.filter(Boolean).join(" ")
+  try {
+    const res = await fetch(`${API}${path}`, {
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { "Authorization": `Bearer ${token}` } : {})
+      },
+      ...opts,
+    })
+    const text = await res.text()
+    try {
+      return JSON.parse(text)
+    } catch {
+      return { error: text || "Server returned non-JSON response" }
+    }
+  } catch (err: any) {
+    console.error("apiFetch network error:", err)
+    return { error: "Unable to connect to backend server. Render service may be waking up from sleep (30s) or NEXT_PUBLIC_API_URL needs to be configured in Vercel." }
+  }
 }
 
 interface User { id: number; name: string; roll_number: string; role: string; department: string }
