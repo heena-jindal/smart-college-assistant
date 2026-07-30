@@ -36,62 +36,32 @@ def get_user_from_token():
     except:
         return None
         
-
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "smartcollege123xyz")
 
-# Fix CORS
+# CORS Setup
+CORS(app, supports_credentials=True, origins="*")
+
 @app.after_request
-def after_request(response):
-    origin = request.headers.get('Origin', '')
-    allowed = [
-        "https://smart-college-assistant-hazel.vercel.app",
-        "http://localhost:3000"
-    ]
-    if origin in allowed:
+def apply_cors_headers(response):
+    origin = request.headers.get('Origin')
+    if origin:
         response.headers['Access-Control-Allow-Origin'] = origin
         response.headers['Access-Control-Allow-Credentials'] = 'true'
-        response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
-        response.headers['Access-Control-Allow-Methods'] = 'GET,POST,PUT,PATCH,DELETE,OPTIONS'
+    else:
+        response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
+    response.headers['Access-Control-Allow-Methods'] = 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
     return response
+
+@app.route('/health', methods=['GET'])
+def health_check():
+    return jsonify({"status": "ok", "message": "Smart College Assistant API is running"}), 200
 
 @app.route('/', defaults={'path': ''}, methods=['OPTIONS'])
 @app.route('/<path:path>', methods=['OPTIONS'])
 def handle_options(path):
-    response = jsonify({})
-    origin = request.headers.get('Origin', '')
-    allowed = [
-        "https://smart-college-assistant-hazel.vercel.app",
-        "http://localhost:3000"
-    ]
-    if origin in allowed:
-        response.headers['Access-Control-Allow-Origin'] = origin
-        response.headers['Access-Control-Allow-Credentials'] = 'true'
-        response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
-        response.headers['Access-Control-Allow-Methods'] = 'GET,POST,PUT,PATCH,DELETE,OPTIONS'
-    return response, 200
-
-CORS(app, supports_credentials=True, origins=[
-    "https://smart-college-assistant-hazel.vercel.app",
-    "http://localhost:3000"
-])
-
-@app.after_request
-def after_request(response):
-    origin = request.headers.get('Origin')
-    if origin in ["https://smart-college-assistant-hazel.vercel.app", "http://localhost:3000"]:
-        response.headers['Access-Control-Allow-Origin'] = origin
-        response.headers['Access-Control-Allow-Credentials'] = 'true'
-        response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
-        response.headers['Access-Control-Allow-Methods'] = 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
-    return response
-    
-def after_request(response):
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS')
-    response.headers.add('Access-Control-Allow-Credentials', 'true')
-    return response
+    return jsonify({}), 200
 
 # ── optional face recognition ──────────────────────────────────────────────
 try:
