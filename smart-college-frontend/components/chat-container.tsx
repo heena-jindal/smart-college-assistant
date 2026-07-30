@@ -51,11 +51,11 @@ export function ChatContainer() {
         timestamp: new Date(),
       }
       setMessages((prev) => [...prev, botMessage])
-    } catch {
+        } catch (err: any) {
       const errorMessage: Message = {
         id: crypto.randomUUID(),
         role: "bot",
-        content: "Sorry, I'm having trouble connecting right now. Please make sure the Flask backend is running on port 5000.",
+        content: err?.message || "Sorry, I'm having trouble connecting to the college assistant server right now. Render free tier may take up to 30-50 seconds to wake up — please try sending your message again in a few seconds.",
         confidence: 0,
         timestamp: new Date(),
       }
