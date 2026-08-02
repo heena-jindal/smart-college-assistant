@@ -1,28 +1,40 @@
 "use client"
 
 import { useState, useEffect, useCallback, useRef } from "react"
+import Link from "next/link"
 import {
   GraduationCap, LogOut, Moon, Sun, ClipboardList, Bell,
   CheckSquare, Users, BarChart2, MessageSquare, Upload, Megaphone,
   Plus, Trash2, Check, Calendar, AlertCircle, TrendingUp, Award,
   Camera, Eye, EyeOff, ArrowLeft, UserPlus, Send, X, Loader2,
-  ScanFace, ShieldCheck
+  ScanFace, ShieldCheck, Bot
 } from "lucide-react"
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, Legend } from "recharts"
 
-const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"
+const DEFAULT_BACKEND_URL = "https://smart-college-assistant-backend.onrender.com"
+const API = (process.env.NEXT_PUBLIC_API_URL || DEFAULT_BACKEND_URL).replace(/\/$/, "")
 
 async function apiFetch(path: string, opts: RequestInit = {}) {
   const token = typeof window !== "undefined" ? localStorage.getItem("token") : null
-  const res = await fetch(`${API}${path}`, {
-    headers: {
-      "Content-Type": "application/json",
-      ...(token ? { "Authorization": `Bearer ${token}` } : {})
-    },
-    ...opts,
-  })
-  return res.json()
+  try {
+    const res = await fetch(`${API}${path}`, {
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { "Authorization": `Bearer ${token}` } : {})
+      },
+      ...opts,
+    })
+    const text = await res.text()
+    try {
+      return JSON.parse(text)
+    } catch {
+      return { error: text || "Server returned non-JSON response" }
+    }
+  } catch (err: any) {
+    console.error("apiFetch network error:", err)
+    return { error: "Unable to connect to backend server. Render service may be waking up from sleep (30s) or NEXT_PUBLIC_API_URL needs to be configured in Vercel." }
+  }
 }
 
 function cn(...classes: (string | boolean | undefined)[]) {
@@ -293,17 +305,17 @@ function LoginPage({ onLogin }: { onLogin: (user: User) => void }) {
     const data = await apiFetch("/auth/login", { method: "POST", body: JSON.stringify({ roll_number: roll, password }) })
     setLoading(false)
     if (data.error) { setError(data.error); return }
-    localStorage.setItem("token", data.token)
-    onLogin(data.user)
+    if (data.token) localStorage.setItem("token", data.token)
+    if (data.user) onLogin(data.user)
   }
 
   const loginWithFace = async (imageBase64: string) => {
     setLoading(true); setError("")
     const data = await apiFetch("/auth/face-login", { method: "POST", body: JSON.stringify({ image: imageBase64 }) })
     setLoading(false)
-    if (!data.recognized) { setError(data.message || "Face not recognized. Try credentials."); setMode("credentials"); return }
+    if (!data.recognized) { setError(data.message || data.error || "Face not recognized. Try credentials."); setMode("credentials"); return }
     if (data.token) localStorage.setItem("token", data.token)
-    onLogin(data.user)
+    if (data.user) onLogin(data.user)
   }
 
   if (showRegister) {
@@ -543,9 +555,6 @@ function RemindersPanel() {
 // ════════════════════════════════════════════════════════════════
 // CHATBOT PANEL
 // ════════════════════════════════════════════════════════════════
-// ════════════════════════════════════════════════════════════════
-// CHATBOT PANEL
-// ════════════════════════════════════════════════════════════════
 function ChatbotPanel() {
   const [messages, setMessages] = useState<any[]>([])
   const [input, setInput] = useState("")
@@ -558,7 +567,7 @@ function ChatbotPanel() {
     setLoading(true)
     try {
       const data = await apiFetch("/chat", { method: "POST", body: JSON.stringify({ message: userMsg }) })
-      setMessages(prev => [...prev, { role: "bot", content: data.response, intent: data.intent, confidence: data.confidence }])
+      setMessages(prev => [...prev, { role: "bot", content: data.response || data.error || "No response", intent: data.intent, confidence: data.confidence }])
     } catch { 
       setMessages(prev => [...prev, { role: "bot", content: "Sorry, something went wrong." }]) 
     }
@@ -617,19 +626,20 @@ function ChatbotPanel() {
     </Card>
   )
 }
+
 // ════════════════════════════════════════════════════════════════
 // STUDENT ANALYTICS
 // ════════════════════════════════════════════════════════════════
 function StudentAnalytics() {
   const [data, setData] = useState<any>(null)
   useEffect(() => { apiFetch("/student/analytics").then(setData) }, [])
-  if (!data) return <div className="flex h-64 items-center justify-center text-muted-foreground"><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Loading analytics...</div>
+  if (!data || data.error) return <div className="flex h-64 items-center justify-center text-muted-foreground">{data?.error || <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Loading analytics...</>}</div>
   return (
     <div className="space-y-6">
       <Card>
         <h3 className="mb-4 font-semibold text-foreground flex items-center gap-2"><BarChart2 className="h-4 w-4 text-primary" /> Subject-wise Performance</h3>
         <ResponsiveContainer width="100%" height={250}>
-          <BarChart data={data.grades_data} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
+          <BarChart data={data.grades_data || []} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
             <XAxis dataKey="subject" tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} />
             <YAxis tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} domain={[0, 100]} />
@@ -641,7 +651,7 @@ function StudentAnalytics() {
       <Card>
         <h3 className="mb-4 font-semibold text-foreground flex items-center gap-2"><TrendingUp className="h-4 w-4 text-primary" /> You vs Class Average</h3>
         <ResponsiveContainer width="100%" height={250}>
-          <BarChart data={data.class_comparison} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
+          <BarChart data={data.class_comparison || []} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
             <XAxis dataKey="subject" tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} />
             <YAxis tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} domain={[0, 100]} />
@@ -654,7 +664,7 @@ function StudentAnalytics() {
       </Card>
       <Card>
         <h3 className="mb-4 font-semibold text-foreground flex items-center gap-2"><ClipboardList className="h-4 w-4 text-primary" /> Monthly Attendance Trend</h3>
-        {data.monthly_attendance.length === 0 ? (
+        {(!data.monthly_attendance || data.monthly_attendance.length === 0) ? (
           <p className="text-center text-sm text-muted-foreground py-8">No attendance data available yet</p>
         ) : (
           <ResponsiveContainer width="100%" height={250}>
@@ -716,19 +726,19 @@ function MarksCalculator() {
 function AttendancePredictor() {
   const [data, setData] = useState<any>(null)
   useEffect(() => { apiFetch("/student/attendance-predictor").then(setData) }, [])
-  if (!data) return <div className="flex h-64 items-center justify-center text-muted-foreground"><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Loading...</div>
+  if (!data || data.error) return <div className="flex h-64 items-center justify-center text-muted-foreground">{data?.error || <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Loading...</>}</div>
   return (
     <div className="space-y-4">
       <Card>
         <h3 className="mb-4 font-semibold text-foreground flex items-center gap-2"><TrendingUp className="h-4 w-4 text-primary" /> Overall Attendance</h3>
         <div className="flex items-center gap-6">
-          <div className={cn("flex h-20 w-20 shrink-0 items-center justify-center rounded-full text-white text-xl font-bold", data.overall.eligible ? "bg-emerald-500" : "bg-red-500")}>
-            {data.overall.percentage}%
+          <div className={cn("flex h-20 w-20 shrink-0 items-center justify-center rounded-full text-white text-xl font-bold", data.overall?.eligible ? "bg-emerald-500" : "bg-red-500")}>
+            {data.overall?.percentage || 0}%
           </div>
           <div>
-            <p className="text-sm text-foreground font-medium">{data.overall.present} classes attended out of {data.overall.total}</p>
-            <p className={cn("text-sm mt-1", data.overall.eligible ? "text-emerald-600" : "text-red-600")}>
-              {data.overall.eligible ? "✅ Eligible for exams" : "❌ Not eligible — attendance too low"}
+            <p className="text-sm text-foreground font-medium">{data.overall?.present || 0} classes attended out of {data.overall?.total || 0}</p>
+            <p className={cn("text-sm mt-1", data.overall?.eligible ? "text-emerald-600" : "text-red-600")}>
+              {data.overall?.eligible ? "✅ Eligible for exams" : "❌ Not eligible — attendance too low"}
             </p>
           </div>
         </div>
@@ -736,7 +746,7 @@ function AttendancePredictor() {
       <Card>
         <h3 className="mb-4 font-semibold text-foreground flex items-center gap-2"><ClipboardList className="h-4 w-4 text-primary" /> Subject-wise Prediction</h3>
         <div className="space-y-3">
-          {data.results.map((r: any) => (
+          {(data.results || []).map((r: any) => (
             <div key={r.subject} className={cn("rounded-xl border p-4", r.status === "safe" ? "border-emerald-200 bg-emerald-50 dark:border-emerald-900 dark:bg-emerald-900/10" : r.status === "warning" ? "border-amber-200 bg-amber-50 dark:border-amber-900 dark:bg-amber-900/10" : "border-red-200 bg-red-50 dark:border-red-900 dark:bg-red-900/10")}>
               <div className="flex items-center justify-between mb-2">
                 <p className="font-medium text-foreground">{r.subject}</p>
@@ -893,7 +903,30 @@ function StudentDashboard({ user }: { user: User }) {
   useEffect(() => { apiFetch("/student/dashboard").then(setData) }, [])
   useEffect(() => { if (activeTab === "attendance") apiFetch("/student/attendance").then(d => setAttendance(d.records || [])) }, [activeTab])
 
-  if (!data) return <div className="flex h-64 items-center justify-center text-muted-foreground"><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Loading...</div>
+  if (!data || data.error) {
+    return (
+      <div className="flex h-64 flex-col items-center justify-center gap-3 text-center">
+        {data?.error ? (
+          <div className="rounded-xl bg-red-50 p-4 text-sm text-red-600 dark:bg-red-950/40 dark:text-red-400 max-w-md">
+            <AlertCircle className="mx-auto mb-2 h-6 w-6" />
+            <p className="font-semibold">Unable to load student dashboard</p>
+            <p className="mt-1 text-xs opacity-90">{data.error}</p>
+            <button onClick={() => apiFetch("/student/dashboard").then(setData)} className="mt-3 rounded-lg bg-primary px-3 py-1.5 text-xs text-primary-foreground hover:bg-primary/90">
+              Retry Connection
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center text-muted-foreground"><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Loading dashboard...</div>
+        )}
+      </div>
+    )
+  }
+
+  const attendancePct = data.attendance?.percentage ?? 0
+  const attendanceEligible = data.attendance?.eligible ?? false
+  const gradesList = Array.isArray(data.grades) ? data.grades : []
+  const announcementsList = Array.isArray(data.announcements) ? data.announcements : []
+  const remindersList = Array.isArray(data.reminders) ? data.reminders : []
 
   const tabs = [
     { id: "overview", label: "Overview", icon: BarChart2 },
@@ -924,16 +957,16 @@ function StudentDashboard({ user }: { user: User }) {
       {activeTab === "overview" && (
         <div className="space-y-6">
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            <StatCard icon={ClipboardList} label="Attendance" value={`${data.attendance.percentage}%`} sub={data.attendance.eligible ? "✅ Eligible" : "⚠️ Low"} color={data.attendance.eligible ? "bg-emerald-500" : "bg-red-500"} />
-            <StatCard icon={Award} label="Subjects" value={data.grades.length} sub="Grades uploaded" color="bg-blue-500" />
-            <StatCard icon={Megaphone} label="Announcements" value={data.announcements.length} sub="From faculty" color="bg-purple-500" />
-            <StatCard icon={Bell} label="Reminders" value={data.reminders.length} sub="Upcoming" color="bg-amber-500" />
+            <StatCard icon={ClipboardList} label="Attendance" value={`${attendancePct}%`} sub={attendanceEligible ? "✅ Eligible" : "⚠️ Low"} color={attendanceEligible ? "bg-emerald-500" : "bg-red-500"} />
+            <StatCard icon={Award} label="Subjects" value={gradesList.length} sub="Grades uploaded" color="bg-blue-500" />
+            <StatCard icon={Megaphone} label="Announcements" value={announcementsList.length} sub="From faculty" color="bg-purple-500" />
+            <StatCard icon={Bell} label="Reminders" value={remindersList.length} sub="Upcoming" color="bg-amber-500" />
           </div>
-          {data.announcements.length > 0 && (
+          {announcementsList.length > 0 && (
             <Card>
               <h3 className="mb-3 font-semibold text-foreground flex items-center gap-2"><Megaphone className="h-4 w-4 text-primary" /> Latest Announcements</h3>
               <div className="space-y-3">
-                {data.announcements.slice(0, 3).map((a: any, i: number) => (
+                {announcementsList.slice(0, 3).map((a: any, i: number) => (
                   <div key={i} className="flex gap-3 rounded-xl border border-border p-3">
                     <AlertCircle className={cn("h-4 w-4 shrink-0 mt-0.5", a.priority === "high" ? "text-red-500" : "text-blue-500")} />
                     <div>
@@ -949,7 +982,7 @@ function StudentDashboard({ user }: { user: User }) {
           <Card>
             <h3 className="mb-3 font-semibold text-foreground flex items-center gap-2"><TrendingUp className="h-4 w-4 text-primary" /> Performance Summary</h3>
             <div className="space-y-2">
-              {data.grades.slice(0, 5).map((g: any) => {
+              {gradesList.slice(0, 5).map((g: any) => {
                 const pct = Math.round((g.marks_obtained / g.total_marks) * 100)
                 return (
                   <div key={g.subject} className="flex items-center gap-3">
@@ -994,7 +1027,7 @@ function StudentDashboard({ user }: { user: User }) {
         <Card>
           <h3 className="mb-4 font-semibold text-foreground">Academic Performance</h3>
           <div className="space-y-3">
-            {data.grades.map((g: any) => {
+            {gradesList.map((g: any) => {
               const pct = Math.round((g.marks_obtained / g.total_marks) * 100)
               return (
                 <div key={g.subject} className="rounded-xl border border-border p-4">
@@ -1018,7 +1051,7 @@ function StudentDashboard({ user }: { user: User }) {
 
       {activeTab === "announcements" && (
         <div className="space-y-3">
-          {data.announcements.map((a: any, i: number) => (
+          {announcementsList.map((a: any, i: number) => (
             <Card key={i}>
               <div className="flex items-start gap-3">
                 <AlertCircle className={cn("h-5 w-5 shrink-0 mt-0.5", a.priority === "high" ? "text-red-500" : "text-blue-500")} />
@@ -1033,7 +1066,7 @@ function StudentDashboard({ user }: { user: User }) {
               </div>
             </Card>
           ))}
-          {data.announcements.length === 0 && <Card><p className="text-center text-muted-foreground">No announcements yet</p></Card>}
+          {announcementsList.length === 0 && <Card><p className="text-center text-muted-foreground">No announcements yet</p></Card>}
         </div>
       )}
 
@@ -1054,13 +1087,13 @@ function StudentDashboard({ user }: { user: User }) {
 function FacultyAnalytics() {
   const [data, setData] = useState<any>(null)
   useEffect(() => { apiFetch("/faculty/analytics").then(setData) }, [])
-  if (!data) return <div className="flex h-64 items-center justify-center text-muted-foreground"><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Loading analytics...</div>
+  if (!data || data.error) return <div className="flex h-64 items-center justify-center text-muted-foreground">{data?.error || <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Loading analytics...</>}</div>
   return (
     <div className="space-y-6">
       <Card>
         <h3 className="mb-4 font-semibold text-foreground flex items-center gap-2"><Users className="h-4 w-4 text-primary" /> Student Attendance Overview</h3>
         <ResponsiveContainer width="100%" height={250}>
-          <BarChart data={data.student_attendance} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
+          <BarChart data={data.student_attendance || []} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
             <XAxis dataKey="name" tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} />
             <YAxis tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} domain={[0, 100]} />
@@ -1072,7 +1105,7 @@ function FacultyAnalytics() {
       <Card>
         <h3 className="mb-4 font-semibold text-foreground flex items-center gap-2"><Award className="h-4 w-4 text-primary" /> Subject-wise Class Average</h3>
         <ResponsiveContainer width="100%" height={250}>
-          <BarChart data={data.subject_averages} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
+          <BarChart data={data.subject_averages || []} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
             <XAxis dataKey="subject" tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} />
             <YAxis tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} domain={[0, 100]} />
@@ -1085,8 +1118,8 @@ function FacultyAnalytics() {
         <h3 className="mb-4 font-semibold text-foreground flex items-center gap-2"><TrendingUp className="h-4 w-4 text-primary" /> Attendance Distribution</h3>
         <ResponsiveContainer width="100%" height={250}>
           <PieChart>
-            <Pie data={data.attendance_distribution} cx="50%" cy="50%" outerRadius={90} dataKey="value" label={({ name, value }) => `${name}: ${value}`}>
-              {data.attendance_distribution.map((entry: any, index: number) => (
+            <Pie data={data.attendance_distribution || []} cx="50%" cy="50%" outerRadius={90} dataKey="value" label={({ name, value }) => `${name}: ${value}`}>
+              {(data.attendance_distribution || []).map((entry: any, index: number) => (
                 <Cell key={index} fill={entry.color} />
               ))}
             </Pie>
@@ -1166,7 +1199,24 @@ function FacultyDashboard({ user }: { user: User }) {
   const uploadGrade = async () => { const res = await apiFetch("/faculty/grades/upload", { method: "POST", body: JSON.stringify(gradeForm) }); setMsg(res.message || res.error) }
   const postAnnouncement = async () => { const res = await apiFetch("/faculty/announcement", { method: "POST", body: JSON.stringify(announcForm) }); setMsg(res.message || res.error); setAnnouncForm({ title: "", content: "", priority: "normal" }) }
 
-  if (!data) return <div className="flex h-64 items-center justify-center text-muted-foreground"><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Loading...</div>
+  if (!data || data.error) {
+    return (
+      <div className="flex h-64 flex-col items-center justify-center gap-3 text-center">
+        {data?.error ? (
+          <div className="rounded-xl bg-red-50 p-4 text-sm text-red-600 dark:bg-red-950/40 dark:text-red-400 max-w-md">
+            <AlertCircle className="mx-auto mb-2 h-6 w-6" />
+            <p className="font-semibold">Unable to load faculty dashboard</p>
+            <p className="mt-1 text-xs opacity-90">{data.error}</p>
+            <button onClick={load} className="mt-3 rounded-lg bg-primary px-3 py-1.5 text-xs text-primary-foreground hover:bg-primary/90">
+              Retry Connection
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center text-muted-foreground"><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Loading dashboard...</div>
+        )}
+      </div>
+    )
+  }
 
   const tabs = [
     { id: "overview", label: "Overview", icon: BarChart2 },
@@ -1380,17 +1430,21 @@ export default function App() {
               </div>
               <div>
                 <p className="text-sm font-semibold text-foreground">Smart College Assistant</p>
-                <p className="text-xs text-muted-foreground capitalize">{user.role} · {user.department}</p>
+                <p className="text-xs text-muted-foreground capitalize">{user?.role || "user"} · {user?.department || "General"}</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
               <div className="hidden sm:flex items-center gap-2 rounded-xl border border-border bg-background px-3 py-1.5">
                 <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xs font-bold">
-                  {user.name[0]}
+                  {user?.name ? user.name[0] : "U"}
                 </div>
-                <span className="text-sm font-medium text-foreground">{user.name}</span>
-                <Badge text={user.role} type={user.role === "faculty" ? "info" : "success"} />
+                <span className="text-sm font-medium text-foreground">{user?.name || "User"}</span>
+                <Badge text={user?.role || "student"} type={user?.role === "faculty" ? "info" : "success"} />
               </div>
+              <Link href="/" className="flex items-center gap-1.5 rounded-lg border border-border bg-background px-3 py-2 text-xs font-medium text-foreground hover:bg-accent">
+                <Bot className="h-4 w-4 text-primary" />
+                <span className="hidden sm:inline">AI Chatbot</span>
+              </Link>
               <button onClick={() => setDark(!dark)} className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background text-foreground hover:bg-accent">
                 {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
               </button>
@@ -1402,10 +1456,10 @@ export default function App() {
         </header>
         <main className="mx-auto max-w-5xl px-4 py-6">
           <div className="mb-6">
-            <h2 className="text-xl font-bold text-foreground">Welcome back, {user.name.split(" ")[0]}! 👋</h2>
+            <h2 className="text-xl font-bold text-foreground">Welcome back, {(user?.name || "User").split(" ")[0]}!</h2>
             <p className="text-sm text-muted-foreground">{new Date().toLocaleDateString("en-IN", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</p>
           </div>
-          {user.role === "student" ? <StudentDashboard user={user} /> : <FacultyDashboard user={user} />}
+          {user?.role === "student" ? <StudentDashboard user={user} /> : <FacultyDashboard user={user} />}
         </main>
       </div>
     </div>
