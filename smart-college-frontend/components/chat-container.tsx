@@ -40,8 +40,10 @@ export function ChatContainer() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: content }),
       })
-      if (!res.ok) throw new Error("Failed to get response")
       const data = await res.json()
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to get response from server")
+      }
       const botMessage: Message = {
         id: crypto.randomUUID(),
         role: "bot",
@@ -51,11 +53,11 @@ export function ChatContainer() {
         timestamp: new Date(),
       }
       setMessages((prev) => [...prev, botMessage])
-        } catch (err: any) {
+    } catch (err: any) {
       const errorMessage: Message = {
         id: crypto.randomUUID(),
         role: "bot",
-        content: err?.message || "Sorry, I'm having trouble connecting to the college assistant server right now. Render free tier may take up to 30-50 seconds to wake up — please try sending your message again in a few seconds.",
+        content: err?.message || "Sorry, I'm having trouble connecting to the college assistant server right now. Render free tier may take up to 30-50 seconds to wake up 🕐 please try sending your message again in a few seconds.",
         confidence: 0,
         timestamp: new Date(),
       }
