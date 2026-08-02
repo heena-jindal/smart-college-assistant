@@ -12,6 +12,11 @@ import {
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, Legend } from "recharts"
 
+function useMounted() {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  return mounted
+}
 const DEFAULT_BACKEND_URL = "https://smart-college-assistant-backend.onrender.com"
 const API = (process.env.NEXT_PUBLIC_API_URL || DEFAULT_BACKEND_URL).replace(/\/$/, "")
 
@@ -28,15 +33,7 @@ async function apiFetch(path: string, opts: RequestInit = {}) {
     const text = await res.text()
     try {
       return JSON.parse(text)
-    } catch {
-      return { error: text || "Server returned non-JSON response" }
-    }
-  } catch (err: any) {
-    console.error("apiFetch network error:", err)
-    return { error: "Unable to connect to backend server. Render service may be waking up from sleep (30s) or NEXT_PUBLIC_API_URL needs to be configured in Vercel." }
-  }
-}
-    } catch {
+    } catch (_e) {
       return { error: text || "Server returned non-JSON response" }
     }
   } catch (err: any) {
@@ -636,7 +633,9 @@ function ChatbotPanel() {
 // ════════════════════════════════════════════════════════════════
 function StudentAnalytics() {
   const [data, setData] = useState<any>(null)
+  const mounted = useMounted()
   useEffect(() => { apiFetch("/student/analytics").then(setData) }, [])
+  if (!mounted) return <div className="flex h-64 items-center justify-center text-muted-foreground"><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Loading analytics...</div>
   if (!data || data.error) return <div className="flex h-64 items-center justify-center text-muted-foreground">{data?.error || <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Loading analytics...</>}</div>
   return (
     <div className="space-y-6">
@@ -1090,7 +1089,9 @@ function StudentDashboard({ user }: { user: User }) {
 // ════════════════════════════════════════════════════════════════
 function FacultyAnalytics() {
   const [data, setData] = useState<any>(null)
+  const mounted = useMounted()
   useEffect(() => { apiFetch("/faculty/analytics").then(setData) }, [])
+  if (!mounted) return <div className="flex h-64 items-center justify-center text-muted-foreground"><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Loading analytics...</div>
   if (!data || data.error) return <div className="flex h-64 items-center justify-center text-muted-foreground">{data?.error || <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Loading analytics...</>}</div>
   return (
     <div className="space-y-6">
