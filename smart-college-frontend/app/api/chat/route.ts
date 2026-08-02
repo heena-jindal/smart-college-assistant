@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 
-const FLASK_API_URL = process.env.FLASK_API_URL ?? "http://127.0.0.1:5000"
+const DEFAULT_BACKEND_URL = "https://smart-college-assistant-backend.onrender.com"
+const FLASK_API_URL = process.env.FLASK_API_URL || process.env.NEXT_PUBLIC_API_URL || DEFAULT_BACKEND_URL
 
 export async function POST(req: Request) {
   try {
@@ -10,7 +11,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Message is required" }, { status: 400 })
     }
 
-    const upstream = await fetch(`${FLASK_API_URL}/chat`, {
+    const cleanBackendUrl = FLASK_API_URL.replace(/\/$/, "")
+    const upstream = await fetch(`${cleanBackendUrl}/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message }),
@@ -20,8 +22,8 @@ export async function POST(req: Request) {
     if (!upstream.ok) {
       const text = await upstream.text()
       return NextResponse.json(
-        { error: `Backend error: ${text || upstream.statusText}` },
-        { status: 502 }
+        { error: `Backend error (${upstream.status}): ${text || upstream.statusText}` },
+        { status: upstream.status }
       )
     }
 
@@ -31,7 +33,11 @@ export async function POST(req: Request) {
       confidence: data.confidence,
       intent: data.intent,
     })
-  } catch {
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+  } catch (err: any) {
+    console.error("Chat API route error:", err)
+    return NextResponse.json(
+      { error: `Unable to connect to backend server. If the Render service was sleeping, please wait 30 seconds and try again.` },
+      { status: 502 }
+    )
   }
 }

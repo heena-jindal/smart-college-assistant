@@ -36,9 +36,13 @@ async function apiFetch(path: string, opts: RequestInit = {}) {
     return { error: "Unable to connect to backend server. Render service may be waking up from sleep (30s) or NEXT_PUBLIC_API_URL needs to be configured in Vercel." }
   }
 }
-
-function cn(...classes: (string | boolean | undefined)[]) {
-  return classes.filter(Boolean).join(" ")
+    } catch {
+      return { error: text || "Server returned non-JSON response" }
+    }
+  } catch (err: any) {
+    console.error("apiFetch network error:", err)
+    return { error: "Unable to connect to backend server. Render service may be waking up from sleep (30s) or NEXT_PUBLIC_API_URL needs to be configured in Vercel." }
+  }
 }
 
 interface User { id: number; name: string; roll_number: string; role: string; department: string }
