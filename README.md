@@ -49,24 +49,7 @@
 > | Faculty | FAC001 | faculty123 |
 > | Student | STU001 | student123 |
 
-### Screenshots
 
-<!-- Add screenshots to docs/screenshots/ and uncomment the lines below.
-     Suggested names: login.png, student-dashboard.png, chatbot.png,
-     attendance.png, grades.png, analytics.png, leave-form.png, dark-mode.png
--->
-
-<!--
-| Login | Student Dashboard |
-|-------|------------------|
-| ![Login](docs/screenshots/login.png) | ![Student dashboard](docs/screenshots/student-dashboard.png) |
-
-| Bilingual Chatbot | Analytics |
-|-------------------|-----------|
-| ![Chatbot](docs/screenshots/chatbot.png) | ![Analytics](docs/screenshots/analytics.png) |
--->
-
----
 
 ## Features
 
